@@ -1,0 +1,37 @@
+.main-panel {
+     -fx-background-color: rgb(240, 240, 255);
+}
+
+.btn {
+    -fx-border-style: solid;
+    -fx-border-width: 2px;
+    -fx-border-color: rgba(0, 0, 0, 0.3); /* ciemna, półprzezroczysta obwódka */
+    -fx-font-family: 'Lato';
+    -fx-font-size: 13px; /* trochę mniejszy font */
+    -fx-text-fill: white;
+    -fx-background-color: #3498db;
+    -fx-cursor: hand;
+    -fx-padding: 15px 60px; /* zmniejszone padding */
+
+    -fx-letter-spacing: 1px;
+    -fx-font-weight: bold;
+    -fx-effect: null;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.btn:hover {
+    -fx-background-color: #2980b9;
+}
+
+.btn:pressed {
+    -fx-background-color: #2980b9;
+    -fx-translate-y: 2px; /* efekt "naciśnięcia" */
+}
+
+#top_menu {
+    -fx-background-color: rgb(52, 152, 219, 0.8);
+}
+

@@ -1,4 +1,4 @@
-package nemo.networkingnemo;
+package nemo.networking;
 
 import javafx.application.Application;
 

@@ -4,6 +4,6 @@ module nemo.networkingnemo {
 
     requires org.kordamp.bootstrapfx.core;
 
-    opens nemo.networkingnemo to javafx.fxml;
-    exports nemo.networkingnemo;
+    opens nemo.networking to javafx.fxml;
+    exports nemo.networking;
 }
