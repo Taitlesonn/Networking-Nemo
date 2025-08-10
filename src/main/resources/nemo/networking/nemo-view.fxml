@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="nemo.networking.NemoController"
+            fx:id="menu" styleClass="main-panel">
+        <top>
+            <HBox fx:id="top_menu">
+                <Button fx:id="top_help" text="help" styleClass="btn"/>
+                <Button fx:id="top_files" text="files" styleClass="btn"/>
+                <Button fx:id="top_new" text="new" styleClass="btn"/>
+                <Button fx:id="top_computers" text="computers" styleClass="btn"/>
+                <Button fx:id="top_vms" text="virtual machines" styleClass="btn"/>
+                <Button fx:id="top_server" text="server" styleClass="btn" />
+            </HBox>
+
+        </top>
+        <left >
+            <ScrollPane fx:id="left_menu" >
+                <VBox fx:id="lef_menu_buttons">
+
+                </VBox>
+            </ScrollPane>
+        </left>
+        <center>
+            <Pane fx:id="center_menu"/>
+        </center>
+
+</BorderPane>
