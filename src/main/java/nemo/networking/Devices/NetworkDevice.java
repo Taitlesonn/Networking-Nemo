@@ -1,16 +1,10 @@
 package nemo.networking.Devices;
 
-public class NetworkDevice {
-    private final String Name;
-    private final int type;
-
+public class NetworkDevice extends root_dev{
 
     public NetworkDevice(String name, int type){
-        this.Name = name;
-        this.type = type;
+        setName(name);
+        setType(type);
     }
 
-    public int getType() { return type; }
-
-    public String getName() { return Name; }
 }

@@ -160,5 +160,32 @@ public class Topologia {
         return false;
     }
 
+    public static boolean set_runing(int t, String name, boolean s){
+        switch (t){
+            case Topologia.NetworkDevice_t -> { for (NetworkDevice n : Topologia.networkDevices) if(Objects.equals(n.getName(), name)) {n.setRunnig(s); return true;} }
+            case Topologia.NetworkService_t -> { for (NetworkService n : Topologia.networkServices) if(Objects.equals(n.getName(), name)) {n.setRunnig(s); return true; } }
+            case Topologia.PC_t -> { for (PC p : Topologia.pcs) if(Objects.equals(p.getName(), name)) {p.setRunnig(s); return true; } }
+            case Topologia.VM_t -> { for (VM v : Topologia.vms) if(Objects.equals(v.getName(), name)) {v.setRunnig(s); return true; } }
+        }
+        return false;
+    }
+    public static boolean is_runnig(int t, String name){
+        switch (t){
+            case Topologia.NetworkDevice_t -> { for (NetworkDevice n : Topologia.networkDevices) if(Objects.equals(n.getName(), name)) return n.isRunnig();}
+            case Topologia.NetworkService_t -> { for (NetworkService n : Topologia.networkServices) if(Objects.equals(n.getName(), name)) return n.isRunnig(); }
+            case Topologia.PC_t -> { for (PC p : Topologia.pcs) if(Objects.equals(p.getName(), name)) return p.isRunnig(); }
+            case Topologia.VM_t -> { for (VM v : Topologia.vms) if(Objects.equals(v.getName(), name)) return v.isRunnig(); }
+        }
+        return false;
+    }
+
+    public static int how_much_runnig_all(){
+        int cunt = 0;
+        for (NetworkService n : Topologia.networkServices) if(n.isRunnig()) cunt++;
+        for (NetworkDevice n : Topologia.networkDevices) if(n.isRunnig()) cunt++;
+        for (PC p : Topologia.pcs) if(p.isRunnig()) cunt++;
+        for (VM v : Topologia.vms) if (v.isRunnig()) cunt++;
+        return  cunt;
+    }
 
 }

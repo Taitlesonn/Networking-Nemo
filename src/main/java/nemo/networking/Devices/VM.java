@@ -1,21 +1,10 @@
 package nemo.networking.Devices;
 
-public class VM {
-    private final int system;
-    private final String Name;
+public class VM extends root_dev{
 
-
-    public VM(String name, int system){
-        this.Name = name;
-        this.system = system;
+    public VM(String name, int type){
+        setName(name);
+        setType(type);
     }
 
-    public int getSystem() {
-        return system;
-    }
-
-
-    public String getName() {
-        return Name;
-    }
 }

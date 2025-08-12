@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="90c57be0-a485-4af8-9375-64f5647ccc72" name="Changes" comment="Licencja">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Networking-Nemo.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/Devices/root_dev.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/Devices/NetworkDevice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/Devices/NetworkDevice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/Devices/NetworkService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/Devices/NetworkService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/Devices/PC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/Devices/PC.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/Devices/VM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/Devices/VM.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/Topologia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/Topologia.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Taitlesonn&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Taitlesonn/Networking-Nemo.git&quot;,
+    &quot;accountId&quot;: &quot;1f10ea4b-0d5e-4fb2-9707-9da134f3f937&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="316uxfqGDLFGKOATB2zsQ0jlvvh" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Launcher.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Nemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Networking-Nemo [package].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;SHELLCHECK.PATH&quot;: &quot;/home/michal/.var/app/com.jetbrains.IntelliJ-IDEA-Community/data/JetBrains/IdeaIC2025.2/Shell Script/shellcheck&quot;,
+    &quot;Shell Script.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_directory_selection&quot;: &quot;/home/michal/Networking-Nemo/src/main/java/nemo&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/michal/Networking-Nemo/run.sh&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/nemo/networkingnemo/styles" />
+      <recent name="$PROJECT_DIR$/src/main/resources/nemo/networkingnemo" />
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+    </key>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="90c57be0-a485-4af8-9375-64f5647ccc72" name="Changes" comment="" />
+      <created>1754857096938</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1754857096938</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Początek nemo">
+      <option name="closed" value="true" />
+      <created>1754857380602</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1754857380602</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Podstawowa logika i css">
+      <option name="closed" value="true" />
+      <created>1754867114238</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1754867114238</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Podstawowa logika i css">
+      <option name="closed" value="true" />
+      <created>1754867184029</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1754867184029</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Podstawowa logika i css">
+      <option name="closed" value="true" />
+      <created>1754867265657</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1754867265657</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Instalator w trakcie budowy razem z build.sh">
+      <option name="closed" value="true" />
+      <created>1754935244045</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1754935244046</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Licencja">
+      <option name="closed" value="true" />
+      <created>1754935285117</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1754935285117</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Początek nemo" />
+    <MESSAGE value="Podstawowa logika i css" />
+    <MESSAGE value="Instalator w trakcie budowy razem z build.sh" />
+    <MESSAGE value="Licencja" />
+    <option name="LAST_COMMIT_MESSAGE" value="Licencja" />
+  </component>
+</project>
