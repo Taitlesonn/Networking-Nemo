@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Images_st {
 
-    private static final String img_p = "/nemo/networking/images/";
+    private static final String img_p = "images/";
 
     private static final String ruter = "ruter_ap.png";
     private static final String ruter_wi_fi_on = "ruter_ap_wi_fi_on.png";

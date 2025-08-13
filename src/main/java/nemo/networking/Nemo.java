@@ -14,10 +14,12 @@ public class Nemo extends Application {
         int w = 800;
         int h = 1500;
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Nemo.class.getResource("nemo-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Nemo.class.getResource("/nemo/networking/nemo-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), h, w);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles/style.css")).toExternalForm());
+
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/nemo/networking/styles/style.css")).toExternalForm());
         stage.setTitle("Networkin - Nemo");
+        stage.centerOnScreen();
         stage.setScene(scene);
         stage.show();
     }
