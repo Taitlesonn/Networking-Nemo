@@ -18,10 +18,10 @@ public class Images_st {
     private static final String windows_work_stecion = "windows_work_stecion.png";
     private static final String linux_work_stecion = "linux_work_stecion.png";
 
-    private static String wan = "wan_cloud.png";
-    private static String api = "api.png";
-    private static String firewall = "firewall.png";
-    private static String db = "db.png";
+    private static final String wan = "wan_cloud.png";
+    private static final String api = "api.png";
+    private static final String firewall = "firewall.png";
+    private static final String db = "db.png";
 
     private static ImageView load(String name) {
         return new ImageView(new Image(Objects.requireNonNull(

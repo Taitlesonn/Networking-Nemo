@@ -1,12 +1,23 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.ScrollPane?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:id="menu"
-      prefWidth="800.0" prefHeight="600.0" styleClass="dark-blue-panel ">
+      prefWidth="800.0" prefHeight="600.0"
+      styleClass="dark-blue-panel">
 
-    <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
+    <!-- nagłówek: u góry, wyśrodkowany poziomo -->
+    <VBox alignment="TOP_CENTER" prefHeight="56">
         <Label fx:id="info" styleClass="article-title" />
     </VBox>
 
+    <!-- scroll z zawartością rośnie i zajmuje resztę miejsca -->
+    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+        <VBox fx:id="infos" />
+    </ScrollPane>
+
 </VBox>
+

@@ -19,8 +19,8 @@
                 <Button fx:id="top_new" text="new" styleClass="btn"/>
                 <Button fx:id="top_computers" text="computers" styleClass="btn" onAction="#top_computer_action"/>
                 <Button fx:id="top_network_device" text="network device" styleClass="btn" onAction="#top_network_device_action" />
-                <Button fx:id="top_network_service" text="network service" styleClass="btn" />
-                <Button fx:id="top_vms" text="virtual machines" styleClass="btn"/>
+                <Button fx:id="top_network_service" text="network service" onAction="#top_network_service_action" styleClass="btn" />
+                <Button fx:id="top_vms" text="virtual machines" onAction="#top_vm_action" styleClass="btn"/>
                 <Button fx:id="top_server" text="server" styleClass="btn" />
             </HBox>
 

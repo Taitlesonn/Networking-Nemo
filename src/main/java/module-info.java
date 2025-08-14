@@ -7,4 +7,5 @@ module nemo.networkingnemo {
 
     opens nemo.networking to javafx.fxml;
     exports nemo.networking;
+    exports nemo.networking.Devices;
 }

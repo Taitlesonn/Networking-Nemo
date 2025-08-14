@@ -179,6 +179,45 @@ public class Topologia {
         return false;
     }
 
+    public static boolean add_note(String name, int type, String note){
+        Objects.requireNonNull(name, "NUll name error");
+        Objects.requireNonNull(note, "NUll note error");
+        switch (type){
+            case Topologia.NetworkDevice_t -> {
+                for(int i = 0; i < Topologia.networkDevices.size(); i++){
+                    if(Objects.equals(Topologia.networkDevices.get(i).getName(), name)){
+                        Topologia.networkDevices.get(i).setNotes(note);
+                        return true;
+                    }
+                }
+            }
+            case Topologia.NetworkService_t -> {
+                for(int i = 0; i < Topologia.networkServices.size(); i++){
+                    if(Objects.equals(Topologia.networkServices.get(i).getName(), name)){
+                        Topologia.networkServices.get(i).setNotes(note);
+                        return true;
+                    }
+                }
+            }
+            case Topologia.PC_t -> {
+                for (int i = 0; i < Topologia.pcs.size(); i++){
+                    if(Objects.equals(Topologia.pcs.get(i).getName(), name)){
+                        Topologia.pcs.get(i).setNotes(note);
+                        return true;
+                    }
+                }
+            }
+            case Topologia.VM_t -> {
+                for (int i = 0; i < Topologia.vms.size(); i++){
+                    if(Objects.equals(Topologia.vms.get(i).getName(), name)){
+                        Topologia.vms.get(i).setNotes(note);
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
     public static int how_much_runnig_all(){
         int cunt = 0;
         for (NetworkService n : Topologia.networkServices) if(n.isRunnig()) cunt++;
@@ -187,5 +226,12 @@ public class Topologia {
         for (VM v : Topologia.vms) if (v.isRunnig()) cunt++;
         return  cunt;
     }
+
+
+
+    public static List<NetworkDevice> getNetworkDevices() { return Topologia.networkDevices; }
+    public static List<NetworkService> getNetworkServices() { return Topologia.networkServices; }
+    public static List<PC> getPcs() { return  Topologia.pcs; }
+    public static List<VM> getVms() { return Topologia.vms; }
 
 }
