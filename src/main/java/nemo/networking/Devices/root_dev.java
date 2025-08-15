@@ -68,4 +68,14 @@ public class root_dev {
     }
 
     public String[] getIps() { return this.ips; }
+
+    public int getIpCount() {
+        int c = 0;
+        for (String s : this.ips){
+            if (valid_ip(s)){
+                c++;
+            }
+        }
+        return c;
+    }
 }

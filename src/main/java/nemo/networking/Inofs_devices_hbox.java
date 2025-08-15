@@ -152,7 +152,7 @@ public class Inofs_devices_hbox {
             );
             this.note.setText(this.pc.getNotes());
             this.name.setText(this.pc.getName());
-            if (this.pc.isRunnig()) {
+            if (Topologia.is_runnig(Topologia.PC_t, this.pc.getName())) {
                 this.statusDotLabel.setText("Włączone:");
                 this.dot.setFill(Color.LIMEGREEN);
             } else {
@@ -168,7 +168,7 @@ public class Inofs_devices_hbox {
             );
             this.note.setText(this.ns.getNotes());
             this.name.setText(this.ns.getName());
-            if (this.ns.isRunnig()) {
+            if (Topologia.is_runnig(Topologia.NetworkService_t, this.ns.getName())) {
                 this.statusDotLabel.setText("Włączone:");
                 this.dot.setFill(Color.LIMEGREEN);
             } else {
@@ -184,7 +184,7 @@ public class Inofs_devices_hbox {
             );
             this.note.setText(this.nd.getNotes());
             this.name.setText(this.nd.getName());
-            if (this.nd.isRunnig()) {
+            if (Topologia.is_runnig(Topologia.NetworkDevice_t, this.nd.getName())) {
                 this.statusDotLabel.setText("Włączone:");
                 this.dot.setFill(Color.LIMEGREEN);
             } else {
@@ -206,7 +206,7 @@ public class Inofs_devices_hbox {
             );
             this.note.setText(this.vm.getNotes());
             this.name.setText(this.vm.getName());
-            if (this.vm.isRunnig()) {
+            if (Topologia.is_runnig(Topologia.VM_t, this.vm.getName())) {
                 this.statusDotLabel.setText("Włączone:");
                 this.dot.setFill(Color.LIMEGREEN);
             } else {
@@ -235,20 +235,21 @@ public class Inofs_devices_hbox {
     }
 
     private void showIpsWindow() {
-        String[] ipsArr = null;
+        String[] ipsArr;
         if (pc != null) ipsArr = pc.getIps();
         else if (ns != null) ipsArr = ns.getIps();
         else if (nd != null) ipsArr = nd.getIps();
         else if (vm != null) ipsArr = vm.getIps();
+        else {
+            ipsArr = null;
+        }
 
         nemo.networking.Devices.root_dev base;
         if (pc != null) base = pc;
         else if (ns != null) base = ns;
         else if (nd != null) base = nd;
         else if (vm != null) base = vm;
-        else {
-            base = null;
-        }
+        else base = null;
 
         Stage owner = null;
         if (main.getScene() != null && main.getScene().getWindow() instanceof Stage) {
@@ -259,7 +260,6 @@ public class Inofs_devices_hbox {
         dialog.initStyle(StageStyle.UTILITY);
         dialog.initModality(Modality.APPLICATION_MODAL);
         if (owner != null) dialog.initOwner(owner);
-
         dialog.setTitle("Adresy IP");
 
         VBox root = new VBox(10);
@@ -269,27 +269,84 @@ public class Inofs_devices_hbox {
 
         Label title = new Label("Adresy IP:");
         title.setStyle("-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px;");
+        root.getChildren().add(title);
 
-        if (ipsArr == null || base == null) {
+        if (base == null) {
             Label none = new Label("Brak danych o adresach IP");
             none.setStyle("-fx-text-fill: #dfeeff;");
-            root.getChildren().addAll(title, none);
+            root.getChildren().add(none);
         } else {
+            // policz niepuste wpisy
+            int nonEmptyCount = 0;
+            if (ipsArr != null) {
+                for (String s : ipsArr) {
+                    if (s != null && !s.isBlank()) nonEmptyCount++;
+                }
+            }
+
             ObservableList<IPEntry> items = FXCollections.observableArrayList();
-            for (int i = 0; i < ipsArr.length; i++) {
-                String s = ipsArr[i];
-                if (s != null && !s.isBlank()) items.add(new IPEntry(i, s));
+            if (ipsArr != null) {
+                for (int i = 0; i < ipsArr.length; i++) {
+                    String s = ipsArr[i];
+                    if (s != null && !s.isBlank()) items.add(new IPEntry(i, s));
+                }
             }
 
             if (items.isEmpty()) {
                 Label none = new Label("Brak przypisanych adresów IP");
                 none.setStyle("-fx-text-fill: #dfeeff;");
-                root.getChildren().addAll(title, none);
+                root.getChildren().add(none);
             } else {
                 ListView<IPEntry> lv = getIpEntryListView(items, base);
-
-                root.getChildren().addAll(title, lv);
+                root.getChildren().add(lv);
             }
+
+            // --- kontrolki dodawania nowego IP (pokazywane zawsze jeśli mamy `base`)
+            HBox addBox = new HBox(8);
+            addBox.setAlignment(Pos.CENTER_RIGHT);
+
+            TextField newIpTf = new TextField();
+            newIpTf.setPromptText("np. 192.168.0.1");
+            newIpTf.setStyle("-fx-control-inner-background: #072033; -fx-text-fill: #dfeeff;");
+            newIpTf.setPrefWidth(180);
+
+            Button addBtn = new Button("Dodaj IP");
+            addBtn.setStyle("-fx-background-color: transparent; -fx-border-color: #2b6a9a; -fx-text-fill: #dfeeff;");
+
+            // przycisk aktywny tylko gdy nie przekroczono limitu 4 (0 też jest <4 więc też pozwoli dodać)
+            addBtn.setDisable(nonEmptyCount >= 4);
+
+            addBtn.setOnAction(e -> {
+                String newIp = newIpTf.getText() == null ? "" : newIpTf.getText().trim();
+                if (newIp.isEmpty()) {
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.initOwner(dialog);
+                    a.setTitle("Błąd");
+                    a.setHeaderText("Brak adresu");
+                    a.setContentText("Wpisz adres IP przed dodaniem.");
+                    a.showAndWait();
+                    return;
+                }
+
+                // znajdź pierwszy wolny indeks (jeśli brak miejsc, użyj długości tablicy)
+                int idx = findFirstEmptyIndex(ipsArr);
+                boolean ok = base.add_ip(idx, newIp);
+                if (!ok) {
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.initOwner(dialog);
+                    a.setTitle("Błąd walidacji");
+                    a.setHeaderText("Nieprawidłowy adres IP lub indeks");
+                    a.setContentText("Sprawdź format adresu IPv4 (np. 192.168.0.1).");
+                    a.showAndWait();
+                } else {
+                    // odśwież okno: zamknij i otwórz ponownie aby pobrać aktualne dane
+                    dialog.close();
+                    showIpsWindow();
+                }
+            });
+
+            addBox.getChildren().addAll(newIpTf, addBtn);
+            root.getChildren().add(addBox);
         }
 
         Button close = new Button("Zamknij");
@@ -304,6 +361,20 @@ public class Inofs_devices_hbox {
         dialog.setScene(scene);
         dialog.showAndWait();
     }
+
+    /**
+     * Zwraca pierwszy indeks w tablicy, który jest null lub pusty;
+     * jeśli nie znaleziono takiego miejsca, zwraca arr.length (czyli dopisanie na końcu).
+     * Jeśli arr == null, zwraca 0.
+     */
+    private int findFirstEmptyIndex(String[] arr) {
+        if (arr == null) return 0;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == null || arr[i].isBlank()) return i;
+        }
+        return arr.length;
+    }
+
 
     private ListView<IPEntry> getIpEntryListView(ObservableList<IPEntry> items, root_dev base) {
         ListView<IPEntry> lv = new ListView<>(items);
@@ -340,7 +411,8 @@ public class Inofs_devices_hbox {
             edit.initOwner((Stage) main.getScene().getWindow());
         }
         edit.setTitle("Edytuj IP — " + entry.index);
-
+        edit.setWidth(300);
+        edit.setHeight(500);
         VBox box = new VBox(8);
         box.setPadding(new Insets(12));
         box.setStyle("-fx-background-color: #0b2b4a; -fx-border-color: #153e62; -fx-border-radius: 6; -fx-background-radius: 6;");
@@ -364,6 +436,28 @@ public class Inofs_devices_hbox {
         cancel.setStyle("-fx-background-color: transparent; -fx-border-color: #2b6a9a; -fx-text-fill: #dfeeff;");
 
         buttons.getChildren().addAll(cancel, save);
+
+        // Przycisk Dodaj IP — tylko jeśli liczba IP <= 4
+        if (base.getIpCount() <= 4) { // zakładam, że masz metodę getIpCount()
+            Button add = new Button("Dodaj IP");
+            add.setStyle("-fx-background-color: transparent; -fx-border-color: #2b6a9a; -fx-text-fill: #dfeeff;");
+            add.setOnAction(e -> {
+                String newIp = tf.getText() == null ? "" : tf.getText().trim();
+                boolean ok = base.add_ip(entry.index + 1, newIp); // lub inny indeks dodania
+                if (!ok) {
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.initOwner(edit);
+                    a.setTitle("Błąd walidacji");
+                    a.setHeaderText("Nieprawidłowy adres IP");
+                    a.setContentText("Sprawdź format adresu IPv4 (np. 192.168.0.1).");
+                    a.showAndWait();
+                } else {
+                    lv.refresh();
+                    edit.close();
+                }
+            });
+            buttons.getChildren().add(add);
+        }
 
         box.getChildren().addAll(lbl, tf, info, buttons);
 
@@ -391,6 +485,7 @@ public class Inofs_devices_hbox {
 
         edit.showAndWait();
     }
+
 
 
 }

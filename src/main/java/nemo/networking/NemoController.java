@@ -264,4 +264,51 @@ public class NemoController {
         }
 
     }
+
+    @FXML
+    private void top_server_action(){
+        try {
+            URL fxmlUrl = getClass().getResource("/nemo/networking/server.fxml");
+            if (fxmlUrl == null) throw new RuntimeException("FXML not found!");
+
+            FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
+
+            Region root = fxmlLoader.load();
+            root.applyCss();
+            root.layout();
+
+            double prefW = root.prefWidth(-1);
+            double prefH = root.prefHeight(-1);
+
+
+            Scene scene = new Scene(root);
+            URL cssUrl = getClass().getResource("/nemo/networking/styles/style.css");
+            if (cssUrl != null) scene.getStylesheets().add(cssUrl.toExternalForm());
+
+            Stage newStage = new Stage();
+            newStage.setTitle("Server");
+            newStage.setScene(scene);
+
+
+            if (menu != null && menu.getScene() != null && menu.getScene().getWindow() != null) {
+                newStage.initOwner(menu.getScene().getWindow());
+            }
+
+
+            double decoW = 16;
+            double decoH = 39;
+
+
+            newStage.setWidth(Math.max(prefW + decoW, 300)); // minimalna szerokość 300
+            newStage.setHeight(Math.max(prefH + decoH, 200)); // minimalna wysokość 200
+
+            // pokaż i wycentruj
+            newStage.show();
+            newStage.sizeToScene();
+            newStage.centerOnScreen();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

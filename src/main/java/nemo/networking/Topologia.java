@@ -213,10 +213,54 @@ public class Topologia {
     }
     public static boolean is_runnig(int t, String name){
         switch (t){
-            case Topologia.NetworkDevice_t -> { for (NetworkDevice n : Topologia.networkDevices) if(Objects.equals(n.getName(), name)) return n.isRunnig();}
-            case Topologia.NetworkService_t -> { for (NetworkService n : Topologia.networkServices) if(Objects.equals(n.getName(), name)) return n.isRunnig(); }
-            case Topologia.PC_t -> { for (PC p : Topologia.pcs) if(Objects.equals(p.getName(), name)) return p.isRunnig(); }
-            case Topologia.VM_t -> { for (VM v : Topologia.vms) if(Objects.equals(v.getName(), name)) return v.isRunnig(); }
+            case Topologia.NetworkDevice_t -> {
+                for (NetworkDevice n : Topologia.networkDevices){
+                    if(Objects.equals(n.getName(), name)) {
+                        for (String ip : n.getIps()){
+                            if(Server.isIpRunning(ip)){
+                                return true;
+                            }
+                        }
+                        return n.isRunnig();
+                    }
+                }
+            }
+            case Topologia.NetworkService_t -> {
+                for (NetworkService n : Topologia.networkServices) {
+                    if(Objects.equals(n.getName(), name)) {
+                        for (String ip : n.getIps()){
+                            if(Server.isIpRunning(ip)){
+                                return true;
+                            }
+                        }
+                        return n.isRunnig();
+                    }
+                }
+            }
+            case Topologia.PC_t -> {
+                for (PC p : Topologia.pcs) {
+                    if(Objects.equals(p.getName(), name)){
+                        for(String ip : p.getIps()){
+                            if(Server.isIpRunning(ip)){
+                                return true;
+                            }
+                        }
+                        return p.isRunnig();
+                    }
+                };
+            }
+            case Topologia.VM_t -> {
+                for (VM v : Topologia.vms) {
+                    if(Objects.equals(v.getName(), name)) {
+                        for(String ip : v.getIps()){
+                            if(Server.isIpRunning(ip)){
+                                return true;
+                            }
+                        }
+                        return v.isRunnig();
+                    }
+                }
+            }
         }
         return false;
     }
