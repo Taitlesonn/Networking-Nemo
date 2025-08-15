@@ -160,6 +160,48 @@ public class Topologia {
         return false;
     }
 
+    public static boolean add_ip(String Name, int t, String ip, int index){
+        switch (t){
+            case Topologia.NetworkService_t -> {
+                for(NetworkService ns : Topologia.networkServices){
+                    if(Objects.equals(ns.getName(), Name)){
+                        if(ns.add_ip(index, ip)){
+                            return true;
+                        }
+                    }
+                }
+            }
+            case Topologia.NetworkDevice_t-> {
+                for(NetworkDevice nd : Topologia.networkDevices){
+                    if(Objects.equals(nd.getName(), Name)){
+                        if(nd.add_ip(index, ip)){
+                            return true;
+                        }
+                    }
+                }
+            }
+            case Topologia.PC_t -> {
+                for(PC p : Topologia.pcs){
+                    if(Objects.equals(p.getName(), Name)){
+                        if(p.add_ip(index, ip)){
+                            return true;
+                        }
+                    }
+                }
+            }
+            case Topologia.VM_t -> {
+                for(VM v : Topologia.vms){
+                    if(Objects.equals(v.getName(), Name)){
+                        if(v.add_ip(index, ip)){
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     public static boolean set_runing(int t, String name, boolean s){
         switch (t){
             case Topologia.NetworkDevice_t -> { for (NetworkDevice n : Topologia.networkDevices) if(Objects.equals(n.getName(), name)) {n.setRunnig(s); return true;} }

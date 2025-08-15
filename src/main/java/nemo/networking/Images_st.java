@@ -10,8 +10,8 @@ public class Images_st {
 
     private static final String ruter = "ruter_ap.png";
     private static final String ruter_wi_fi_on = "ruter_ap_wi_fi_on.png";
-    private static final String switch_l2 = "switchl2.png";
-    private static final String switch_l3 = "switchl3.png";
+    private static final String switch_l2 = "switch_l2.png";
+    private static final String switch_l3 = "switch_l3.png";
 
     private static final String windows_server = "windows_server.png";
     private static final String linux_server = "linux_server.png";

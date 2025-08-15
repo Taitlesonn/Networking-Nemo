@@ -29,13 +29,46 @@ public class NemoController {
     @FXML private Button top_network_device;
     @FXML private Button top_network_service;
 
+    @FXML
+    private void top_new_action() {
+        try {
+            URL fxmlUrl = getClass().getResource("/nemo/networking/new_b.fxml");
+            if (fxmlUrl == null) throw new RuntimeException("FXML not found!");
+
+            FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
+            Region root = fxmlLoader.load();
+
+            Scene scene = new Scene(root);
+            URL cssUrl = getClass().getResource("/nemo/networking/styles/style.css");
+            if (cssUrl != null) scene.getStylesheets().add(cssUrl.toExternalForm());
+
+            Stage newStage = new Stage();
+            newStage.setTitle("new");
+            newStage.setScene(scene);
+            newStage.setResizable(true); // ← pozwala na runtime resize
+
+            if (menu != null && menu.getScene() != null && menu.getScene().getWindow() != null) {
+                newStage.initOwner(menu.getScene().getWindow());
+            }
+
+            // ustaw minimalne wymiary, jeśli chcesz ograniczenia
+            newStage.setMinWidth(root.getMinWidth());
+            newStage.setMinHeight(root.getMinHeight());
+
+            newStage.show();
+            newStage.centerOnScreen();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
 
     @FXML
     private void top_computer_action() {
             try {
-                URL fxmlUrl = getClass().getResource("/nemo/networking/new_machine.fxml");
+                URL fxmlUrl = getClass().getResource("/nemo/networking/machine.fxml");
                 if (fxmlUrl == null) throw new RuntimeException("FXML not found!");
 
                 FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
@@ -85,7 +118,7 @@ public class NemoController {
     @FXML
     private void top_network_device_action() {
             try {
-                URL fxmlUrl = getClass().getResource("/nemo/networking/new_machine.fxml");
+                URL fxmlUrl = getClass().getResource("/nemo/networking/machine.fxml");
                 if (fxmlUrl == null) throw new RuntimeException("FXML not found!");
 
                 FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
@@ -135,7 +168,7 @@ public class NemoController {
     @FXML
     private void top_network_service_action() {
         try {
-            URL fxmlUrl = getClass().getResource("/nemo/networking/new_machine.fxml");
+            URL fxmlUrl = getClass().getResource("/nemo/networking/machine.fxml");
             if (fxmlUrl == null) throw new RuntimeException("FXML not found!");
 
             FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
@@ -185,7 +218,7 @@ public class NemoController {
     @FXML
     private void top_vm_action() {
         try {
-            URL fxmlUrl = getClass().getResource("/nemo/networking/new_machine.fxml");
+            URL fxmlUrl = getClass().getResource("/nemo/networking/machine.fxml");
             if (fxmlUrl == null) throw new RuntimeException("FXML not found!");
 
             FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);

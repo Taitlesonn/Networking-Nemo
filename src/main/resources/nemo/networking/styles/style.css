@@ -39,6 +39,11 @@
     -fx-spacing: 6px;
 }
 
+.bar_menu {
+    -fx-background-color: rgba(52,152,219,0.8);
+    -fx-padding: 6px;
+    -fx-spacing: 6px;
+}
 
 .article-text {
     -fx-font-family: "Serif";
