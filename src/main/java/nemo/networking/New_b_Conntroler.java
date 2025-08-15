@@ -5,6 +5,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class New_b_Conntroler {
 
@@ -170,7 +171,7 @@ public class New_b_Conntroler {
         }
 
         for (int i = 0; i < ips2.size(); i++){
-            if(!ips2.get(i).isEmpty()){
+            if(!ips2.get(i).isEmpty() && !Objects.equals(ips2.get(i), "-")){
                 int topologyType = switch (this.type_r) {
                     case 1 -> Topologia.PC_t;
                     case 2 -> Topologia.NetworkService_t;
