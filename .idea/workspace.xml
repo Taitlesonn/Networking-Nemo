@@ -4,17 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="90c57be0-a485-4af8-9375-64f5647ccc72" name="Changes" comment="Opracowanie Menu i dodanie typów do device">
-      <change afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/New_b_Conntroler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/nemo/networking/new_b.fxml" afterDir="false" />
+    <list default="true" id="90c57be0-a485-4af8-9375-64f5647ccc72" name="Changes" comment="Adding device">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/Devices/root_dev.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/Devices/root_dev.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/Images_st.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/Images_st.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/NemoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/NemoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/Topologia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/Topologia.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/nemo/networking/nemo-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/nemo/networking/nemo-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/nemo/networking/new_machine.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/nemo/networking/machine.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/nemo/networking/styles/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/nemo/networking/styles/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/Inofs_devices_hbox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/Inofs_devices_hbox.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -175,7 +167,15 @@
       <option name="project" value="LOCAL" />
       <updated>1755187471606</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Adding device">
+      <option name="closed" value="true" />
+      <created>1755267200167</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1755267200167</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -187,6 +187,7 @@
     <MESSAGE value="Images" />
     <MESSAGE value="w trakcie dodawania okien&#10;funkcyjnych" />
     <MESSAGE value="Opracowanie Menu i dodanie typów do device" />
-    <option name="LAST_COMMIT_MESSAGE" value="Opracowanie Menu i dodanie typów do device" />
+    <MESSAGE value="Adding device" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding device" />
   </component>
 </project>
