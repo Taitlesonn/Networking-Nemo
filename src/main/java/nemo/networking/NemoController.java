@@ -7,8 +7,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import nemo.networking.Devices.NetworkDevice;
+import nemo.networking.Devices.NetworkService;
+import nemo.networking.Devices.PC;
+import nemo.networking.Devices.VM;
+import nemo.networking.Devices.maper.Mapper_t;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public class NemoController {
@@ -28,6 +39,19 @@ public class NemoController {
     @FXML private Button top_new;
     @FXML private Button top_network_device;
     @FXML private Button top_network_service;
+
+    private final String Pc_s = "pc";
+    private final String Vm_s = "vm";
+    private final String NetworkService_s = "ns";
+    private final String NetworkDevice_s = "nd";
+    private final Mapper_t center_m = new Mapper_t();
+
+
+
+    @FXML
+    private void initialize(){
+        Topologia.setCenter_m(center_m);
+    }
 
     @FXML
     private void top_new_action() {
@@ -324,4 +348,5 @@ public class NemoController {
             e.printStackTrace();
         }
     }
+
 }

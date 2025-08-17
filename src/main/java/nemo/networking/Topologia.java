@@ -1,7 +1,9 @@
 package nemo.networking;
 import nemo.networking.Devices.*;
+import nemo.networking.Devices.maper.Mapper_t;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,6 +19,8 @@ public class Topologia {
     private static final List<PC> pcs = new ArrayList<PC>();
     private static final List<VM> vms = new ArrayList<VM>();
     private static final List<Connection> connections = new ArrayList<>();
+
+    private static Mapper_t center_m = null;
 
 
     private static boolean existsByNameAndType(String name, int type) {
@@ -38,7 +42,13 @@ public class Topologia {
                 return false;
             }
         }
-        Topologia.networkDevices.add(new NetworkDevice(Name, type));
+        NetworkDevice n = new NetworkDevice(Name, type);
+        Topologia.networkDevices.add(n);
+        if(Topologia.center_m != null){
+            if(!Topologia.center_m.add_device(Topologia.NetworkDevice_t, n)){
+                System.err.println("Mapper center ERROR in Network Device");
+            }
+        }
         return true;
     }
 
@@ -49,7 +59,13 @@ public class Topologia {
                 return false;
             }
         }
-        Topologia.networkServices.add(new NetworkService(Name, type));
+        NetworkService n = new NetworkService(Name, type);
+        Topologia.networkServices.add(n);
+        if(Topologia.center_m != null){
+            if(!Topologia.center_m.add_device(Topologia.NetworkService_t, n)){
+                System.err.println("Mapper center ERROR in Network Service");
+            }
+        }
         return true;
     }
 
@@ -60,9 +76,14 @@ public class Topologia {
                 return false;
             }
         }
-        Topologia.pcs.add(new PC(Name, system));
+        PC p = new PC(Name, system);
+        Topologia.pcs.add(p);
+        if(Topologia.center_m != null){
+            if(!Topologia.center_m.add_device(Topologia.PC_t, p)){
+                System.err.println("Mapper center ERROR in PC");
+            }
+        }
         return true;
-
     }
 
     public static boolean add_vm(String Name, int system) {
@@ -72,7 +93,13 @@ public class Topologia {
                 return false;
             }
         }
-        Topologia.vms.add(new VM(Name, system));
+        VM v = new VM(Name, system);
+        Topologia.vms.add(v);
+        if(Topologia.center_m != null){
+            if(!Topologia.center_m.add_device(Topologia.VM_t, v)){
+                System.err.println("Mapper center ERROR in VM's");
+            }
+        }
         return true;
     }
 
@@ -120,6 +147,11 @@ public class Topologia {
         Objects.requireNonNull(Name, "Null Name");
         for(int i = 0; i < Topologia.networkDevices.size(); i++){
             if(Objects.equals(Topologia.networkDevices.get(i).getName(), Name)){
+                if(Topologia.center_m != null){
+                    if(!Topologia.center_m.remove_device(Topologia.NetworkDevice_t, Topologia.networkDevices.get(i))){
+                        System.err.println("ERROR in center Network Device");
+                    }
+                }
                 Topologia.networkDevices.remove(i);
                 return true;
             }
@@ -131,6 +163,11 @@ public class Topologia {
         Objects.requireNonNull(Name, "Null Name");
         for(int i = 0; i < Topologia.networkServices.size(); i++){
             if(Objects.equals(Topologia.networkServices.get(i).getName(), Name)){
+                if(Topologia.center_m != null){
+                    if(!Topologia.center_m.remove_device(Topologia.NetworkService_t, Topologia.networkServices.get(i))){
+                        System.err.println("ERROR in center Network Service delete");
+                    }
+                }
                 Topologia.networkServices.remove(i);
                 return true;
             }
@@ -141,7 +178,12 @@ public class Topologia {
     public static boolean delete_pc(String Name){
         Objects.requireNonNull(Name, "Null Name");
         for(int i = 0; i < Topologia.pcs.size(); i++){
-            if(Objects.equals(Topologia.pcs.get(i).getName(), Name)){
+            if(Objects.equals(Topologia.pcs.get(i).getName(), Name)) {
+                if(Topologia.center_m != null){
+                    if(!Topologia.center_m.remove_device(Topologia.PC_t, Topologia.pcs.get(i))){
+                        System.err.println("ERROR in center PC delete");
+                    }
+                }
                 Topologia.pcs.remove(i);
                 return true;
             }
@@ -153,6 +195,11 @@ public class Topologia {
         Objects.requireNonNull(Name, "Null Name");
         for(int i = 0; i < Topologia.vms.size(); i++){
             if(Objects.equals(Topologia.vms.get(i).getName(), Name)){
+                if(Topologia.center_m != null){
+                    if(!Topologia.center_m.remove_device(Topologia.VM_t, Topologia.vms.get(i))){
+                        System.err.println("ERROR in center VM delete");
+                    }
+                }
                 Topologia.vms.remove(i);
                 return true;
             }
@@ -304,20 +351,15 @@ public class Topologia {
         }
         return false;
     }
-    public static int how_much_runnig_all(){
-        int cunt = 0;
-        for (NetworkService n : Topologia.networkServices) if(n.isRunnig()) cunt++;
-        for (NetworkDevice n : Topologia.networkDevices) if(n.isRunnig()) cunt++;
-        for (PC p : Topologia.pcs) if(p.isRunnig()) cunt++;
-        for (VM v : Topologia.vms) if (v.isRunnig()) cunt++;
-        return  cunt;
+
+    public static void setCenter_m(Mapper_t m){
+        Topologia.center_m = m;
     }
 
 
-
-    public static List<NetworkDevice> getNetworkDevices() { return Topologia.networkDevices; }
-    public static List<NetworkService> getNetworkServices() { return Topologia.networkServices; }
-    public static List<PC> getPcs() { return  Topologia.pcs; }
-    public static List<VM> getVms() { return Topologia.vms; }
+    public static List<NetworkDevice> getNetworkDevices() { return Collections.unmodifiableList(Topologia.networkDevices); }
+    public static List<NetworkService> getNetworkServices() { return Collections.unmodifiableList(Topologia.networkServices); }
+    public static List<PC> getPcs() { return  Collections.unmodifiableList(Topologia.pcs); }
+    public static List<VM> getVms() { return Collections.unmodifiableList(Topologia.vms); }
 
 }

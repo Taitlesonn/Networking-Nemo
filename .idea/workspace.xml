@@ -4,9 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="90c57be0-a485-4af8-9375-64f5647ccc72" name="Changes" comment="async runing ping">
+    <list default="true" id="90c57be0-a485-4af8-9375-64f5647ccc72" name="Changes" comment="async close event fix">
+      <change afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/Devices/maper/Mapper_t.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/ServerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/Nemo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/Nemo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/NemoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/NemoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/new_machineController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/new_machineController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/New_b_Conntroler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/New_b_Conntroller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/ServerControler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/Topologia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/Topologia.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/nemo/networking/new_b.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/nemo/networking/new_b.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/nemo/networking/server.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/nemo/networking/server.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,8 +24,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="FxmlFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -215,7 +223,15 @@
       <option name="project" value="LOCAL" />
       <updated>1755440303071</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="async close event fix">
+      <option name="closed" value="true" />
+      <created>1755440759748</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1755440759748</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -233,6 +249,7 @@
     <MESSAGE value="Sprawdza czy jest włączone" />
     <MESSAGE value="clean" />
     <MESSAGE value="async runing ping" />
-    <option name="LAST_COMMIT_MESSAGE" value="async runing ping" />
+    <MESSAGE value="async close event fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="async close event fix" />
   </component>
 </project>

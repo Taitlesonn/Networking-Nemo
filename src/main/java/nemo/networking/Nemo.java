@@ -11,11 +11,11 @@ import java.util.Objects;
 public class Nemo extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        int w = 800;
-        int h = 1500;
+        int w = 1500;
+        int h = 800;
 
         FXMLLoader fxmlLoader = new FXMLLoader(Nemo.class.getResource("/nemo/networking/nemo-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), h, w);
+        Scene scene = new Scene(fxmlLoader.load(), w, h);
 
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/nemo/networking/styles/style.css")).toExternalForm());
         stage.setTitle("Networkin - Nemo");

@@ -6,7 +6,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="nemo.networking.New_b_Conntroler"
+            fx:controller="nemo.networking.New_b_Conntroller"
             prefHeight="700.0" prefWidth="900.0" minHeight="700" minWidth="900"
             >
     <left>

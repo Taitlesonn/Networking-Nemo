@@ -7,7 +7,7 @@ import javafx.scene.layout.VBox;
 import java.util.Map;
 import java.util.Objects;
 
-public class New_b_Conntroler {
+public class New_b_Conntroller {
 
     @FXML private Button vm;
     @FXML private Button ns;
