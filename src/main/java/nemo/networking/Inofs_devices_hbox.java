@@ -1,5 +1,6 @@
 package nemo.networking;
 
+import javafx.application.Platform;
 import javafx.animation.ScaleTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,6 +19,14 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import nemo.networking.Devices.*;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+/**
+ * HBox reprezentujący urządzenie/usługę/VM/PC wraz z UI i asynchronicznym sprawdzaniem stanu.
+ * - render() nie blokuje i nie wywołuje Topologia.is_runnig(...)
+ * - startStatusCheck(...) uruchamia asynchroniczne sprawdzenie i zaktualizuje UI przez Platform.runLater
+ */
 public class Inofs_devices_hbox {
     private final HBox main;
     private final ImageView icon = new ImageView();
@@ -31,18 +40,14 @@ public class Inofs_devices_hbox {
     private PC pc = null;
     private VM vm = null;
 
-
     private final Button ipButton = new Button("IP");
 
-    private static class IPEntry {
-        int index;
-        String ip;
-        IPEntry(int index, String ip) { this.index = index; this.ip = ip; }
-        @Override
-        public String toString() { return index + ": " + ip; }
-    }
+    // status state
+    private final AtomicBoolean runningStateKnown = new AtomicBoolean(false);
+    private volatile boolean running = false;
+    private final AtomicBoolean checkCancelled = new AtomicBoolean(false);
 
-
+    // --- konstruktor: buduje UI, style, animacje, przycisk IP ---
     public Inofs_devices_hbox() {
         main = new HBox(12);
         main.setAlignment(Pos.CENTER_LEFT);
@@ -59,10 +64,8 @@ public class Inofs_devices_hbox {
         note.setStyle("-fx-text-fill: #dfeeff; -fx-font-size: 12px;");
         statusDotLabel.setStyle("-fx-text-fill: white; -fx-font-size: 12px;");
 
-
         dot.setStroke(Color.web("#1a3a5a"));
         dot.setStrokeWidth(1.0);
-
 
         main.setBackground(new Background(new BackgroundFill(Color.web("#0b2b4a"), new CornerRadii(8), Insets.EMPTY)));
 
@@ -71,7 +74,6 @@ public class Inofs_devices_hbox {
         shadow.setOffsetY(2);
         shadow.setColor(Color.color(0,0,0,0.6));
         main.setEffect(shadow);
-
 
         ScaleTransition stEnter = new ScaleTransition(Duration.millis(140), main);
         stEnter.setToX(1.02);
@@ -93,7 +95,6 @@ public class Inofs_devices_hbox {
             main.setEffect(shadow);
         });
 
-
         ipButton.setStyle(
                 "-fx-background-color: transparent;" +
                         "-fx-border-color: #2b6a9a;" +
@@ -108,6 +109,7 @@ public class Inofs_devices_hbox {
         ipButton.setOnAction(e -> showIpsWindow());
     }
 
+    // --- settery do wyboru typu ---
     public Inofs_devices_hbox setNd(NetworkDevice nd) {
         this.nd = nd;
         this.ns = null;
@@ -140,78 +142,141 @@ public class Inofs_devices_hbox {
         return this;
     }
 
+    // --- metody związane ze statusem (thread-safe) ---
+    /**
+     * Aktualizuje UI ze stanem (może być wywołane z dowolnego wątku).
+     * Jeśli nie jesteśmy na FX thread, opakuje w Platform.runLater.
+     */
+    public void updateRunning(boolean running) {
+        this.running = running;
+        this.runningStateKnown.set(true);
+
+        Runnable uiUpdate = () -> {
+            statusDotLabel.setText(running ? "Włączone:" : "Wyłączone:");
+            dot.setFill(running ? Color.LIMEGREEN : Color.RED);
+        };
+
+        if (Platform.isFxApplicationThread()) {
+            uiUpdate.run();
+        } else {
+            Platform.runLater(uiUpdate);
+        }
+    }
+
+    /** Ustawia tylko stan wewnętrzny bez bezpośredniej aktualizacji UI. */
+    public void setRunningState(boolean running) {
+        this.running = running;
+        this.runningStateKnown.set(true);
+    }
+
+    /** Anuluje ewentualne trwające sprawdzanie. */
+    public void cancelStatusCheck() {
+        checkCancelled.set(true);
+    }
+
+    /**
+     * Uruchamia asynchroniczne sprawdzenie stanu (wywołuje Topologia.is_runnig)
+     * i po wyniku zaktualizuje UI na FX thread.
+     *
+     * @param deviceType np. Topologia.PC_t
+     * @param name nazwa hosta do sprawdzenia
+     * @param executor executor do wykonania pracy w tle (może być wirtualny)
+     */
+    public void startStatusCheck(int deviceType, String name, ExecutorService executor) {
+        checkCancelled.set(false);
+        runningStateKnown.set(false);
+
+        executor.execute(() -> {
+            boolean r;
+            try {
+                r = Topologia.is_runnig(deviceType, name);
+            } catch (Throwable ex) {
+                r = false;
+            }
+
+            if (checkCancelled.get()) return;
+
+            // Aktualizacja UI (updateRunning sam zadba o Platform.runLater jeśli trzeba)
+            updateRunning(r);
+        });
+    }
+
+    // --- render: buduje HBox NATYCHMIAST, NIE WYWOŁUJE Topologia.is_runnig(...) ---
     public HBox render() {
         main.getChildren().clear();
 
+        // ustaw ikonę i teksty (tylko odczyty z modelu — bez blokującego sprawdzenia)
         if (this.pc != null) {
-            this.icon.setImage(
-                    (this.pc.getType() == this.pc.windows_t) ? Images_st.getWindowsWorkStetion().getImage() :
-                            (this.pc.getType() == this.pc.windows_server_t) ? Images_st.getWindowsServer().getImage() :
-                                    (this.pc.getType() == this.pc.linux_t) ? Images_st.getLinuxWorkStetion().getImage() :
-                                            (this.pc.getType() == this.pc.linux_server_t) ? Images_st.getLinuxServer().getImage() : null
-            );
+            if (this.pc.getType() == this.pc.windows_t) {
+                this.icon.setImage(Images_st.getWindowsWorkStetion().getImage());
+            } else if (this.pc.getType() == this.pc.windows_server_t) {
+                this.icon.setImage(Images_st.getWindowsServer().getImage());
+            } else if (this.pc.getType() == this.pc.linux_t) {
+                this.icon.setImage(Images_st.getLinuxWorkStetion().getImage());
+            } else if (this.pc.getType() == this.pc.linux_server_t) {
+                this.icon.setImage(Images_st.getLinuxServer().getImage());
+            } else {
+                this.icon.setImage(null);
+            }
+
             this.note.setText(this.pc.getNotes());
             this.name.setText(this.pc.getName());
-            if (Topologia.is_runnig(Topologia.PC_t, this.pc.getName())) {
-                this.statusDotLabel.setText("Włączone:");
-                this.dot.setFill(Color.LIMEGREEN);
-            } else {
-                this.statusDotLabel.setText("Wyłączone:");
-                this.dot.setFill(Color.RED);
-            }
+
         } else if (this.ns != null) {
-            this.icon.setImage(
-                    (this.ns.getType() == this.ns.firewall_t) ? Images_st.getFirewall().getImage() :
-                            (this.ns.getType() == this.ns.api_t) ? Images_st.getApi().getImage() :
-                                    (this.ns.getType() == this.ns.db_t) ? Images_st.getDb().getImage() :
-                                            (this.ns.getType() == this.ns.wan_cloud_t) ? Images_st.getWan().getImage() : null
-            );
+            if (this.ns.getType() == this.ns.firewall_t) {
+                this.icon.setImage(Images_st.getFirewall().getImage());
+            } else if (this.ns.getType() == this.ns.api_t) {
+                this.icon.setImage(Images_st.getApi().getImage());
+            } else if (this.ns.getType() == this.ns.db_t) {
+                this.icon.setImage(Images_st.getDb().getImage());
+            } else if (this.ns.getType() == this.ns.wan_cloud_t) {
+                this.icon.setImage(Images_st.getWan().getImage());
+            } else {
+                this.icon.setImage(null);
+            }
+
             this.note.setText(this.ns.getNotes());
             this.name.setText(this.ns.getName());
-            if (Topologia.is_runnig(Topologia.NetworkService_t, this.ns.getName())) {
-                this.statusDotLabel.setText("Włączone:");
-                this.dot.setFill(Color.LIMEGREEN);
-            } else {
-                this.statusDotLabel.setText("Wyłączone:");
-                this.dot.setFill(Color.RED);
-            }
+
         } else if (this.nd != null) {
-            this.icon.setImage(
-                    (this.nd.getType() == this.nd.ruter_t) ? Images_st.getRuter().getImage() :
-                            (this.nd.getType() == this.nd.ruter_wi_fi_on_t) ? Images_st.getRuterWiFiOn().getImage() :
-                                    (this.nd.getType() == this.nd.switch_l2_t) ? Images_st.getSwitchL2().getImage() :
-                                            (this.nd.getType() == this.nd.switch_l3_t) ? Images_st.getSwitchL3().getImage() : null
-            );
+            if (this.nd.getType() == this.nd.ruter_t) {
+                this.icon.setImage(Images_st.getRuter().getImage());
+            } else if (this.nd.getType() == this.nd.ruter_wi_fi_on_t) {
+                this.icon.setImage(Images_st.getRuterWiFiOn().getImage());
+            } else if (this.nd.getType() == this.nd.switch_l2_t) {
+                this.icon.setImage(Images_st.getSwitchL2().getImage());
+            } else if (this.nd.getType() == this.nd.switch_l3_t) {
+                this.icon.setImage(Images_st.getSwitchL3().getImage());
+            } else {
+                this.icon.setImage(null);
+            }
+
             this.note.setText(this.nd.getNotes());
             this.name.setText(this.nd.getName());
-            if (Topologia.is_runnig(Topologia.NetworkDevice_t, this.nd.getName())) {
-                this.statusDotLabel.setText("Włączone:");
-                this.dot.setFill(Color.LIMEGREEN);
-            } else {
-                this.statusDotLabel.setText("Wyłączone:");
-                this.dot.setFill(Color.RED);
-            }
+
         } else if (this.vm != null) {
-            this.icon.setImage(
-                    (this.vm.getType() == this.vm.windows_t) ? Images_st.getWindowsWorkStetion().getImage() :
-                            (this.vm.getType() == this.vm.windows_server_t) ? Images_st.getWindowsServer().getImage() :
-                                    (this.vm.getType() == this.vm.linux_t) ? Images_st.getLinuxWorkStetion().getImage() :
-                                            (this.vm.getType() == this.vm.linux_server_t) ? Images_st.getLinuxServer().getImage() :
-                                                    (this.vm.getType() == this.vm.ruter_t) ? Images_st.getRuter().getImage() :
-                                                            (this.vm.getType() == this.vm.switch_l2_t) ? Images_st.getSwitchL2().getImage() :
-                                                                    (this.vm.getType() == this.vm.switch_l3_t) ? Images_st.getSwitchL3().getImage() :
-                                                                            (this.vm.getType() == this.vm.api_t) ? Images_st.getApi().getImage() :
-                                                                                    (this.vm.getType() == this.vm.firewall_t) ? Images_st.getFirewall().getImage() :
-                                                                                            (this.vm.getType() == this.vm.db_t) ? Images_st.getDb().getImage() : null
-            );
-            this.note.setText(this.vm.getNotes());
-            this.name.setText(this.vm.getName());
-            if (Topologia.is_runnig(Topologia.VM_t, this.vm.getName())) {
-                this.statusDotLabel.setText("Włączone:");
-                this.dot.setFill(Color.LIMEGREEN);
+            if (this.vm.getType() == this.vm.windows_t) {
+                this.icon.setImage(Images_st.getWindowsWorkStetion().getImage());
+            } else if (this.vm.getType() == this.vm.windows_server_t) {
+                this.icon.setImage(Images_st.getWindowsServer().getImage());
+            } else if (this.vm.getType() == this.vm.linux_t) {
+                this.icon.setImage(Images_st.getLinuxWorkStetion().getImage());
+            } else if (this.vm.getType() == this.vm.linux_server_t) {
+                this.icon.setImage(Images_st.getLinuxServer().getImage());
+            } else if (this.vm.getType() == this.vm.ruter_t) {
+                this.icon.setImage(Images_st.getRuter().getImage());
+            } else if (this.vm.getType() == this.vm.switch_l2_t) {
+                this.icon.setImage(Images_st.getSwitchL2().getImage());
+            } else if (this.vm.getType() == this.vm.switch_l3_t) {
+                this.icon.setImage(Images_st.getSwitchL3().getImage());
+            } else if (this.vm.getType() == this.vm.api_t) {
+                this.icon.setImage(Images_st.getApi().getImage());
+            } else if (this.vm.getType() == this.vm.firewall_t) {
+                this.icon.setImage(Images_st.getFirewall().getImage());
+            } else if (this.vm.getType() == this.vm.db_t) {
+                this.icon.setImage(Images_st.getDb().getImage());
             } else {
-                this.statusDotLabel.setText("Wyłączone:");
-                this.dot.setFill(Color.RED);
+                this.icon.setImage(null);
             }
         } else {
             this.icon.setImage(null);
@@ -219,6 +284,15 @@ public class Inofs_devices_hbox {
             this.note.setText("");
             this.statusDotLabel.setText("");
             this.dot.setFill(Color.GRAY);
+        }
+
+        // jeśli mamy znany stan - pokaż, inaczej pokaż "Sprawdzanie..."
+        if (runningStateKnown.get()) {
+            // updateRunning zajmie się Platform.runLater jeśli trzeba
+            updateRunning(this.running);
+        } else {
+            statusDotLabel.setText("Sprawdzanie...");
+            dot.setFill(Color.GRAY);
         }
 
         Region spacer = new Region();
@@ -232,6 +306,16 @@ public class Inofs_devices_hbox {
 
         main.getChildren().setAll(icon, textBox, spacer, ipButton, statusBox);
         return main;
+    }
+
+    // -------------------- IP dialog i pomocnicze --------------------
+
+    private static class IPEntry {
+        int index;
+        String ip;
+        IPEntry(int index, String ip) { this.index = index; this.ip = ip; }
+        @Override
+        public String toString() { return index + ": " + ip; }
     }
 
     private void showIpsWindow() {
@@ -276,7 +360,6 @@ public class Inofs_devices_hbox {
             none.setStyle("-fx-text-fill: #dfeeff;");
             root.getChildren().add(none);
         } else {
-            // policz niepuste wpisy
             int nonEmptyCount = 0;
             if (ipsArr != null) {
                 for (String s : ipsArr) {
@@ -301,7 +384,6 @@ public class Inofs_devices_hbox {
                 root.getChildren().add(lv);
             }
 
-            // --- kontrolki dodawania nowego IP (pokazywane zawsze jeśli mamy `base`)
             HBox addBox = new HBox(8);
             addBox.setAlignment(Pos.CENTER_RIGHT);
 
@@ -313,7 +395,6 @@ public class Inofs_devices_hbox {
             Button addBtn = new Button("Dodaj IP");
             addBtn.setStyle("-fx-background-color: transparent; -fx-border-color: #2b6a9a; -fx-text-fill: #dfeeff;");
 
-            // przycisk aktywny tylko gdy nie przekroczono limitu 4 (0 też jest <4 więc też pozwoli dodać)
             addBtn.setDisable(nonEmptyCount >= 4);
 
             addBtn.setOnAction(e -> {
@@ -328,7 +409,6 @@ public class Inofs_devices_hbox {
                     return;
                 }
 
-                // znajdź pierwszy wolny indeks (jeśli brak miejsc, użyj długości tablicy)
                 int idx = findFirstEmptyIndex(ipsArr);
                 boolean ok = base.add_ip(idx, newIp);
                 if (!ok) {
@@ -339,7 +419,6 @@ public class Inofs_devices_hbox {
                     a.setContentText("Sprawdź format adresu IPv4 (np. 192.168.0.1).");
                     a.showAndWait();
                 } else {
-                    // odśwież okno: zamknij i otwórz ponownie aby pobrać aktualne dane
                     dialog.close();
                     showIpsWindow();
                 }
@@ -374,7 +453,6 @@ public class Inofs_devices_hbox {
         }
         return arr.length;
     }
-
 
     private ListView<IPEntry> getIpEntryListView(ObservableList<IPEntry> items, root_dev base) {
         ListView<IPEntry> lv = new ListView<>(items);
@@ -438,25 +516,29 @@ public class Inofs_devices_hbox {
         buttons.getChildren().addAll(cancel, save);
 
         // Przycisk Dodaj IP — tylko jeśli liczba IP <= 4
-        if (base.getIpCount() <= 4) { // zakładam, że masz metodę getIpCount()
-            Button add = new Button("Dodaj IP");
-            add.setStyle("-fx-background-color: transparent; -fx-border-color: #2b6a9a; -fx-text-fill: #dfeeff;");
-            add.setOnAction(e -> {
-                String newIp = tf.getText() == null ? "" : tf.getText().trim();
-                boolean ok = base.add_ip(entry.index + 1, newIp); // lub inny indeks dodania
-                if (!ok) {
-                    Alert a = new Alert(Alert.AlertType.ERROR);
-                    a.initOwner(edit);
-                    a.setTitle("Błąd walidacji");
-                    a.setHeaderText("Nieprawidłowy adres IP");
-                    a.setContentText("Sprawdź format adresu IPv4 (np. 192.168.0.1).");
-                    a.showAndWait();
-                } else {
-                    lv.refresh();
-                    edit.close();
-                }
-            });
-            buttons.getChildren().add(add);
+        try {
+            if (base.getIpCount() <= 4) { // zakładam, że masz metodę getIpCount()
+                Button add = new Button("Dodaj IP");
+                add.setStyle("-fx-background-color: transparent; -fx-border-color: #2b6a9a; -fx-text-fill: #dfeeff;");
+                add.setOnAction(e -> {
+                    String newIp = tf.getText() == null ? "" : tf.getText().trim();
+                    boolean ok = base.add_ip(entry.index + 1, newIp); // lub inny indeks dodania
+                    if (!ok) {
+                        Alert a = new Alert(Alert.AlertType.ERROR);
+                        a.initOwner(edit);
+                        a.setTitle("Błąd walidacji");
+                        a.setHeaderText("Nieprawidłowy adres IP");
+                        a.setContentText("Sprawdź format adresu IPv4 (np. 192.168.0.1).");
+                        a.showAndWait();
+                    } else {
+                        lv.refresh();
+                        edit.close();
+                    }
+                });
+                buttons.getChildren().add(add);
+            }
+        } catch (Throwable ignore) {
+            // jeśli brak getIpCount(), ignoruj dodanie przycisku
         }
 
         box.getChildren().addAll(lbl, tf, info, buttons);
@@ -485,7 +567,5 @@ public class Inofs_devices_hbox {
 
         edit.showAndWait();
     }
-
-
 
 }
