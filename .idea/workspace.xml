@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="90c57be0-a485-4af8-9375-64f5647ccc72" name="Changes" comment="clean">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/Inofs_devices_hbox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/Inofs_devices_hbox.java" afterDir="false" />
+    <list default="true" id="90c57be0-a485-4af8-9375-64f5647ccc72" name="Changes" comment="async runing ping">
+      <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/NemoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/NemoController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/new_machineController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/new_machineController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -208,7 +207,15 @@
       <option name="project" value="LOCAL" />
       <updated>1755284637707</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="async runing ping">
+      <option name="closed" value="true" />
+      <created>1755440303071</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1755440303071</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -225,6 +232,7 @@
     <MESSAGE value="ip print and adding fix" />
     <MESSAGE value="Sprawdza czy jest włączone" />
     <MESSAGE value="clean" />
-    <option name="LAST_COMMIT_MESSAGE" value="clean" />
+    <MESSAGE value="async runing ping" />
+    <option name="LAST_COMMIT_MESSAGE" value="async runing ping" />
   </component>
 </project>

@@ -11,10 +11,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-/**
- * Kontroler listy urządzeń — renderuje Inofs_devices_hbox natychmiast,
- * a sprawdzenia stanu (ping) uruchamia asynchronicznie na executorze.
- */
+
 public class new_machineController {
     private final String info_t;
     private final int t;
@@ -41,9 +38,6 @@ public class new_machineController {
         }
     }
 
-    /**
-     * Initialize: renderujemy HBox-y natychmiast (FX thread), a sprawdzenia uruchamiamy asynchronicznie.
-     */
     @FXML
     private void initialize() {
         this.info.setText(this.info_t);
@@ -59,7 +53,6 @@ public class new_machineController {
                     this.infos.getChildren().add(box);
                     idhList.add(idh);
 
-                    // uruchamiamy asynchroniczne sprawdzenie stanu
                     idh.startStatusCheck(Topologia.NetworkDevice_t, n.getName(), executor);
                 }
             }

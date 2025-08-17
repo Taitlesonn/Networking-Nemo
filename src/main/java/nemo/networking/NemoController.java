@@ -104,6 +104,9 @@ public class NemoController {
                 newStage.setWidth(Math.max(prefW + decoW, 300)); // minimalna szerokość 300
                 newStage.setHeight(Math.max(prefH + decoH, 200)); // minimalna wysokość 200
 
+                new_machineController ctrl = fxmlLoader.getController();
+                newStage.setOnCloseRequest(e-> ctrl.shutdownExecutor());
+
                 // pokaż i wycentruj
                 newStage.show();
                 newStage.sizeToScene();
@@ -153,6 +156,9 @@ public class NemoController {
 
                 newStage.setWidth(Math.max(prefW + decoW, 300)); // minimalna szerokość 300
                 newStage.setHeight(Math.max(prefH + decoH, 200)); // minimalna wysokość 200
+
+                new_machineController ctrl = fxmlLoader.getController();
+                newStage.setOnCloseRequest(e-> ctrl.shutdownExecutor());
 
                 // pokaż i wycentruj
                 newStage.show();
@@ -204,6 +210,9 @@ public class NemoController {
             newStage.setWidth(Math.max(prefW + decoW, 300)); // minimalna szerokość 300
             newStage.setHeight(Math.max(prefH + decoH, 200)); // minimalna wysokość 200
 
+            new_machineController ctrl = fxmlLoader.getController();
+            newStage.setOnCloseRequest(e-> ctrl.shutdownExecutor());
+
             // pokaż i wycentruj
             newStage.show();
             newStage.sizeToScene();
@@ -254,6 +263,9 @@ public class NemoController {
             newStage.setWidth(Math.max(prefW + decoW, 300)); // minimalna szerokość 300
             newStage.setHeight(Math.max(prefH + decoH, 200)); // minimalna wysokość 200
 
+            new_machineController ctrl = fxmlLoader.getController();
+            newStage.setOnCloseRequest(e-> ctrl.shutdownExecutor());
+
             // pokaż i wycentruj
             newStage.show();
             newStage.sizeToScene();
@@ -301,6 +313,7 @@ public class NemoController {
 
             newStage.setWidth(Math.max(prefW + decoW, 300)); // minimalna szerokość 300
             newStage.setHeight(Math.max(prefH + decoH, 200)); // minimalna wysokość 200
+
 
             // pokaż i wycentruj
             newStage.show();
