@@ -19,6 +19,12 @@ public class Nemo extends Application {
 
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/nemo/networking/styles/style.css")).toExternalForm());
         stage.setTitle("Networkin - Nemo");
+        stage.setOnCloseRequest(e ->{
+            NemoController n = fxmlLoader.getController();
+            // Wyłączanie wątków
+            n.center_m.setRunning(false);
+            n.center_a.interrupt();
+        });
         stage.centerOnScreen();
         stage.setScene(scene);
         stage.show();

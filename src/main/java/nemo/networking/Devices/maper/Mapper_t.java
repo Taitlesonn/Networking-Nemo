@@ -4,9 +4,12 @@ import nemo.networking.Topologia;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Mapper_t {
     private record Point(int x, int y){ }
+
+    public final AtomicBoolean running = new AtomicBoolean(false);
 
     private final Random rand = new Random();
     private final Map<String, List<? super Object>> devices = new ConcurrentHashMap<>();
@@ -22,7 +25,11 @@ public class Mapper_t {
         devices.put(NetworkService_s, new ArrayList<>());
         devices.put(PC_s, new ArrayList<>());
         devices.put(VM_s, new ArrayList<>());
+        running.set(true);
     }
+
+    public void setRunning(boolean b){ this.running.set(b); }
+    public boolean getRunning(){ return this.running.get(); }
 
     public Boolean move_o(int new_x, int new_y, Object o){
         Objects.requireNonNull(o, "NULL Object in Mapper");
@@ -92,9 +99,9 @@ public class Mapper_t {
 
         switch (type){
             case Topologia.NetworkDevice_t -> {
-                    devices.get(NetworkDevice_s).add(o);
-                    pointMap.put(o, new Point(los_x, los_y));
-                    return true;
+                devices.get(NetworkDevice_s).add(o);
+                pointMap.put(o, new Point(los_x, los_y));
+                return true;
             }
             case Topologia.NetworkService_t -> {
                 devices.get(NetworkService_s).add(o);
@@ -115,4 +122,46 @@ public class Mapper_t {
 
         return false;
     }
+
+
+    public int get_pane_x0() {
+        return pointMap.values()
+                .stream()
+                .mapToInt(Point::x)
+                .min()
+                .orElseThrow(() -> new IllegalStateException("No points in map"));
+    }
+
+    public int get_pane_x1() {
+        return pointMap.values()
+                .stream()
+                .mapToInt(Point::x)
+                .max()
+                .orElseThrow(() -> new IllegalStateException("No points in map"));
+    }
+
+    public int get_pane_y0() {
+        return pointMap.values()
+                .stream()
+                .mapToInt(Point::y)
+                .min()
+                .orElseThrow(() -> new IllegalStateException("No points in map"));
+    }
+
+    public int get_pane_y1() {
+        return pointMap.values()
+                .stream()
+                .mapToInt(Point::y)
+                .max()
+                .orElseThrow(() -> new IllegalStateException("No points in map"));
+    }
+
+    /**
+     * Zwraca liczbę punktów (maszyn) aktualnie w mapperze.
+     * Używane do skalowania siatki w rendererze.
+     */
+    public int getPointsCount() {
+        return pointMap.size();
+    }
+
 }

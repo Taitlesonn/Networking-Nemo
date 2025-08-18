@@ -22,11 +22,7 @@ import nemo.networking.Devices.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-/**
- * HBox reprezentujący urządzenie/usługę/VM/PC wraz z UI i asynchronicznym sprawdzaniem stanu.
- * - render() nie blokuje i nie wywołuje Topologia.is_runnig(...)
- * - startStatusCheck(...) uruchamia asynchroniczne sprawdzenie i zaktualizuje UI przez Platform.runLater
- */
+
 public class Inofs_devices_hbox {
     private final HBox main;
     private final ImageView icon = new ImageView();
@@ -42,12 +38,11 @@ public class Inofs_devices_hbox {
 
     private final Button ipButton = new Button("IP");
 
-    // status state
+
     private final AtomicBoolean runningStateKnown = new AtomicBoolean(false);
     private volatile boolean running = false;
     private final AtomicBoolean checkCancelled = new AtomicBoolean(false);
 
-    // --- konstruktor: buduje UI, style, animacje, przycisk IP ---
     public Inofs_devices_hbox() {
         main = new HBox(12);
         main.setAlignment(Pos.CENTER_LEFT);
@@ -109,7 +104,7 @@ public class Inofs_devices_hbox {
         ipButton.setOnAction(e -> showIpsWindow());
     }
 
-    // --- settery do wyboru typu ---
+
     public Inofs_devices_hbox setNd(NetworkDevice nd) {
         this.nd = nd;
         this.ns = null;
@@ -169,7 +164,6 @@ public class Inofs_devices_hbox {
         this.runningStateKnown.set(true);
     }
 
-    /** Anuluje ewentualne trwające sprawdzanie. */
     public void cancelStatusCheck() {
         checkCancelled.set(true);
     }
@@ -205,7 +199,6 @@ public class Inofs_devices_hbox {
     public HBox render() {
         main.getChildren().clear();
 
-        // ustaw ikonę i teksty (tylko odczyty z modelu — bez blokującego sprawdzenia)
         if (this.pc != null) {
             if (this.pc.getType() == this.pc.windows_t) {
                 this.icon.setImage(Images_st.getWindowsWorkStetion().getImage());
@@ -278,6 +271,9 @@ public class Inofs_devices_hbox {
             } else {
                 this.icon.setImage(null);
             }
+
+            this.note.setText(this.vm.getNotes());
+            this.name.setText(this.vm.getName());
         } else {
             this.icon.setImage(null);
             this.name.setText("Brak urządzenia");
@@ -286,9 +282,7 @@ public class Inofs_devices_hbox {
             this.dot.setFill(Color.GRAY);
         }
 
-        // jeśli mamy znany stan - pokaż, inaczej pokaż "Sprawdzanie..."
         if (runningStateKnown.get()) {
-            // updateRunning zajmie się Platform.runLater jeśli trzeba
             updateRunning(this.running);
         } else {
             statusDotLabel.setText("Sprawdzanie...");
@@ -537,9 +531,7 @@ public class Inofs_devices_hbox {
                 });
                 buttons.getChildren().add(add);
             }
-        } catch (Throwable ignore) {
-            // jeśli brak getIpCount(), ignoruj dodanie przycisku
-        }
+        } catch (Throwable ignore) { }
 
         box.getChildren().addAll(lbl, tf, info, buttons);
 

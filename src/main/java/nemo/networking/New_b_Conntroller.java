@@ -50,8 +50,7 @@ public class New_b_Conntroller {
             Map.entry("Firewall", 0),
             Map.entry("Database", 1),
             Map.entry("API", 2),
-            Map.entry("WAN", 3),
-            Map.entry("Windows", 4)
+            Map.entry("WAN", 3)
     );
 
     private static final Map<String, Integer> ND_MAP = Map.ofEntries(

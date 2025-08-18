@@ -25,13 +25,6 @@
             </HBox>
 
         </top>
-        <left >
-            <ScrollPane fx:id="left_menu" >
-                <VBox fx:id="lef_menu_buttons">
-
-                </VBox>
-            </ScrollPane>
-        </left>
         <center>
             <Pane fx:id="center_menu"/>
         </center>
