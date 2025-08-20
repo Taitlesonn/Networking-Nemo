@@ -1,9 +1,9 @@
 package nemo.networking;
 
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Point2D;
 import javafx.scene.CacheHint;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -13,7 +13,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
-import javafx.scene.image.Image;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
@@ -22,6 +22,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import nemo.networking.Devices.NetworkDevice;
 import nemo.networking.Devices.NetworkService;
@@ -30,13 +31,8 @@ import nemo.networking.Devices.VM;
 import nemo.networking.Devices.maper.Mapper_t;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class NemoController {
     @FXML private BorderPane menu;
@@ -65,12 +61,15 @@ public class NemoController {
     private final double MIN_ZOOM = 0.25;
     private final double MAX_ZOOM = 4.0;
     private static final double WORLD_COORD_SIZE = 32.0;
-    private static final double DEFAULT_IMAGE_SIZE = 32.0;
+    private static final double DEFAULT_IMAGE_SIZE = 64.0;
 
-    public static final ConcurrentLinkedQueue<ImageRequest> queuedImages = new ConcurrentLinkedQueue<>();
+    // Łączenie i rozłączenie
+    private final List<Line> connections = new ArrayList<>();
+    private final Map<ImageView, List<Line>> deviceConnections = new ConcurrentHashMap<>();
+    private ImageView selectedDevice = null;
 
-    private ScheduledExecutorService imagePollerExecutor;
-    private final Object imagePollerLock = new Object();
+
+
 
     public final Thread center_a;
     {
@@ -316,20 +315,6 @@ public class NemoController {
         }
     }
 
-    private void center_topologia() {
-        applyZoom();
-    }
-
-    private void addWorldPane() {
-        if (worldPane.isEmpty()) {
-            Pane pane = new Pane();
-            pane.setPrefWidth(WORLD_COORD_SIZE);
-            pane.setPrefHeight(WORLD_COORD_SIZE);
-            pane.setStyle("-fx-background-color: rgba(0,0,0,0.02);");
-            worldPane.add(pane);
-            contentGroup.getChildren().add(pane);
-        }
-    }
 
 
     private void resizeAndRedrawGrid() {
@@ -402,7 +387,7 @@ public class NemoController {
     public void addImageToTopology(ImageView iv, double x1000, double y1000, String name, int type) {
         if (iv == null) return;
 
-        iv.setFitWidth(64);
+        iv.setFitWidth(DEFAULT_IMAGE_SIZE);
         iv.setPreserveRatio(true);
         iv.setSmooth(true);
         iv.setPickOnBounds(true);
@@ -413,7 +398,8 @@ public class NemoController {
         contentGroup.getChildren().add(iv);
 
         makeDraggable(iv, name, type);
-        addDeleteContextMenu(iv, name, type);
+        addContextMenu(iv, name, type);
+
 
         iv.setCache(true);
         iv.setCacheHint(CacheHint.SPEED);
@@ -499,9 +485,9 @@ public class NemoController {
         return false;
     }
 
-    private void addDeleteContextMenu(ImageView iv, String name, int type) {
+    private void addContextMenu(ImageView iv, String name, int type) {
         ContextMenu cm = new ContextMenu();
-        MenuItem deleteItem = new MenuItem("Usuń");
+        MenuItem deleteItem = new MenuItem("Delete");
         deleteItem.setOnAction(evt -> {
             cm.hide();
             switch (type){
@@ -511,7 +497,9 @@ public class NemoController {
                             this.center_m.remove_device(type, n);
                         }
                     }
-                    Topologia.delete_network_device(name);
+                    if(!Topologia.delete_network_device(name)){
+                        System.err.println("Error deleting Network Device");
+                    }
                 }
                 case Topologia.NetworkService_t -> {
                     for(NetworkService n : Topologia.getNetworkServices()){
@@ -519,7 +507,9 @@ public class NemoController {
                             this.center_m.remove_device(type, n);
                         }
                     }
-                    Topologia.delete_network_service(name);
+                    if(!Topologia.delete_network_service(name)){
+                        System.err.println("Error deleting a Network Service");
+                    }
                 }
                 case Topologia.PC_t -> {
                     for(PC p : Topologia.getPcs()){
@@ -527,7 +517,9 @@ public class NemoController {
                             this.center_m.remove_device(type, p);
                         }
                     }
-                    Topologia.delete_pc(name);
+                    if(!Topologia.delete_pc(name)){
+                        System.err.println("Error deliting a pc");
+                    }
                 }
                 case Topologia.VM_t -> {
                     for(VM v : Topologia.getVms()){
@@ -535,13 +527,59 @@ public class NemoController {
                             this.center_m.remove_device(type, v);
                         }
                     }
-                    Topologia.delete_vm(name);
+                    if(!Topologia.delete_vm(name)){
+                        System.err.println("Error deleting a VM");
+                    }
                 }
             }
             contentGroup.getChildren().remove(iv);
         });
-        cm.getItems().add(deleteItem);
+
+        // Connect
+        MenuItem connect = new MenuItem("Connect");
+        connect.setOnAction(e -> {
+            cm.hide();
+            if (selectedDevice == null) {
+                selectedDevice = iv;
+                iv.setEffect(new DropShadow(20, Color.GREEN));
+            } else if (selectedDevice != iv) {
+                // Tworzymy połączenie
+                Line line = new Line();
+                line.startXProperty().bind(selectedDevice.layoutXProperty().add(selectedDevice.translateXProperty()).add(selectedDevice.getFitWidth()/2));
+                line.startYProperty().bind(selectedDevice.layoutYProperty().add(selectedDevice.translateYProperty()).add(selectedDevice.getFitHeight()/2));
+                line.endXProperty().bind(iv.layoutXProperty().add(iv.translateXProperty()).add(iv.getFitWidth()/2));
+                line.endYProperty().bind(iv.layoutYProperty().add(iv.translateYProperty()).add(iv.getFitHeight()/2));
+                line.setStrokeWidth(2);
+                line.setStroke(Color.BLUE);
+                contentGroup.getChildren().addFirst(line);
+                connections.add(line);
+
+                deviceConnections.computeIfAbsent(selectedDevice, k -> new ArrayList<>()).add(line);
+                deviceConnections.computeIfAbsent(iv, k -> new ArrayList<>()).add(line);
+
+                selectedDevice.setEffect(null);
+                selectedDevice = null;
+            }
+        });
+
+        // Disconnect
+        MenuItem disconnect = new MenuItem("Disconnect");
+        disconnect.setOnAction(e -> {
+            cm.hide();
+            List<Line> lines = deviceConnections.get(iv);
+            if (lines != null) {
+                List<Line> copy = new ArrayList<>(lines);
+                for (Line line : copy) {
+                    contentGroup.getChildren().remove(line);
+                    connections.remove(line);
+                    deviceConnections.forEach((d, l) -> l.remove(line));
+                }
+                lines.clear();
+            }
+        });
+        cm.getItems().addAll(deleteItem, connect, disconnect);
 
         iv.setOnContextMenuRequested(e -> cm.show(iv, e.getScreenX(), e.getScreenY()));
     }
+
 }

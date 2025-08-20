@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="90c57be0-a485-4af8-9375-64f5647ccc72" name="Changes" comment="Dodawanie obiektów i usuwanie do topologi">
+    <list default="true" id="90c57be0-a485-4af8-9375-64f5647ccc72" name="Changes" comment="fix delete in tp">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/NemoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/NemoController.java" afterDir="false" />
     </list>
@@ -258,7 +258,15 @@
       <option name="project" value="LOCAL" />
       <updated>1755693680901</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="fix delete in tp">
+      <option name="closed" value="true" />
+      <created>1755694444952</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1755694444952</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -280,6 +288,7 @@
     <MESSAGE value="Przygotowania do faktycznej topologi w centrum" />
     <MESSAGE value="Poprawa czytelności oraz optymalizacji topologi ( center panel). Powoli można dodawać obiekty" />
     <MESSAGE value="Dodawanie obiektów i usuwanie do topologi" />
-    <option name="LAST_COMMIT_MESSAGE" value="Dodawanie obiektów i usuwanie do topologi" />
+    <MESSAGE value="fix delete in tp" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix delete in tp" />
   </component>
 </project>
