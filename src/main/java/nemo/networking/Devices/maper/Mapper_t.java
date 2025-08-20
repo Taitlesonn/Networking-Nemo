@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Mapper_t {
-    private record Point(int x, int y){ }
+    public record Point(int x, int y){ }
 
     public final AtomicBoolean running = new AtomicBoolean(false);
 
@@ -124,44 +124,29 @@ public class Mapper_t {
     }
 
 
-    public int get_pane_x0() {
-        return pointMap.values()
-                .stream()
-                .mapToInt(Point::x)
-                .min()
-                .orElseThrow(() -> new IllegalStateException("No points in map"));
+    public double get_x(Object o){
+        Point p = pointMap.get(o);
+        return (p == null) ? Double.NaN : (double) p.x;
     }
 
-    public int get_pane_x1() {
-        return pointMap.values()
-                .stream()
-                .mapToInt(Point::x)
-                .max()
-                .orElseThrow(() -> new IllegalStateException("No points in map"));
+    public double get_y(Object o){
+        Point p = pointMap.get(o);
+        return (p == null) ? Double.NaN : (double) p.y;
     }
 
-    public int get_pane_y0() {
-        return pointMap.values()
-                .stream()
-                .mapToInt(Point::y)
-                .min()
-                .orElseThrow(() -> new IllegalStateException("No points in map"));
-    }
-
-    public int get_pane_y1() {
-        return pointMap.values()
-                .stream()
-                .mapToInt(Point::y)
-                .max()
-                .orElseThrow(() -> new IllegalStateException("No points in map"));
+    /**
+     * Zwraca Optional<Point> jeśli obiekt ma przypisaną pozycję.
+     */
+    public Optional<Point> getPoint(Object o) {
+        return Optional.ofNullable(pointMap.get(o));
     }
 
     /**
      * Zwraca liczbę punktów (maszyn) aktualnie w mapperze.
-     * Używane do skalowania siatki w rendererze.
      */
     public int getPointsCount() {
         return pointMap.size();
     }
+
 
 }

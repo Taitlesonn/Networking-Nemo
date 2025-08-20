@@ -22,6 +22,7 @@ public class Nemo extends Application {
         stage.setOnCloseRequest(e ->{
             NemoController n = fxmlLoader.getController();
             // Wyłączanie wątków
+            n.shutdownController();
             n.center_m.setRunning(false);
             n.center_a.interrupt();
         });
