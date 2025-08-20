@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="90c57be0-a485-4af8-9375-64f5647ccc72" name="Changes" comment="Przygotowania do faktycznej topologi w centrum">
+    <list default="true" id="90c57be0-a485-4af8-9375-64f5647ccc72" name="Changes" comment="Poprawa czytelności oraz optymalizacji topologi ( center panel). Powoli można dodawać obiekty">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/Devices/maper/Mapper_t.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/Devices/maper/Mapper_t.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/Nemo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/Nemo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/NemoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/NemoController.java" afterDir="false" />
@@ -246,7 +245,15 @@
       <option name="project" value="LOCAL" />
       <updated>1755528648538</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Poprawa czytelności oraz optymalizacji topologi ( center panel). Powoli można dodawać obiekty">
+      <option name="closed" value="true" />
+      <created>1755688604080</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1755688604080</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -266,6 +273,7 @@
     <MESSAGE value="async runing ping" />
     <MESSAGE value="async close event fix" />
     <MESSAGE value="Przygotowania do faktycznej topologi w centrum" />
-    <option name="LAST_COMMIT_MESSAGE" value="Przygotowania do faktycznej topologi w centrum" />
+    <MESSAGE value="Poprawa czytelności oraz optymalizacji topologi ( center panel). Powoli można dodawać obiekty" />
+    <option name="LAST_COMMIT_MESSAGE" value="Poprawa czytelności oraz optymalizacji topologi ( center panel). Powoli można dodawać obiekty" />
   </component>
 </project>

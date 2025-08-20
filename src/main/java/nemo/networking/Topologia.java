@@ -59,10 +59,10 @@ public class Topologia {
                     double x = center_m.get_x(n);
                     double y = center_m.get_y(n);
                     switch (type) {
-                        case 0 -> nemoController.addImageToTopology(Images_st.getRuter(), x, y);
-                        case 1 -> nemoController.addImageToTopology(Images_st.getRuterWiFiOn(), x, y);
-                        case 2 -> nemoController.addImageToTopology(Images_st.getSwitchL2(), x, y);
-                        case 3 -> nemoController.addImageToTopology(Images_st.getSwitchL3(), x, y);
+                        case 0 -> nemoController.addImageToTopology(Images_st.getRuter(), x, y, n.getName(), Topologia.NetworkDevice_t);
+                        case 1 -> nemoController.addImageToTopology(Images_st.getRuterWiFiOn(), x, y, n.getName(), Topologia.NetworkDevice_t);
+                        case 2 -> nemoController.addImageToTopology(Images_st.getSwitchL2(), x, y, n.getName(), Topologia.NetworkDevice_t);
+                        case 3 -> nemoController.addImageToTopology(Images_st.getSwitchL3(), x, y, n.getName(), Topologia.NetworkDevice_t);
                     }
                 } catch (Exception e) {
                     throw new RuntimeException(e);
@@ -85,10 +85,10 @@ public class Topologia {
                     double x = center_m.get_x(n);
                     double y = center_m.get_y(n);
                     switch (type) {
-                        case 0 -> nemoController.addImageToTopology(Images_st.getFirewall(), x, y);
-                        case 1 -> nemoController.addImageToTopology(Images_st.getDb(), x, y);
-                        case 2 -> nemoController.addImageToTopology(Images_st.getApi(), x, y);
-                        case 3 -> nemoController.addImageToTopology(Images_st.getWan(), x, y);
+                        case 0 -> nemoController.addImageToTopology(Images_st.getFirewall(), x, y, n.getName(), Topologia.NetworkService_t);
+                        case 1 -> nemoController.addImageToTopology(Images_st.getDb(), x, y, n.getName(), Topologia.NetworkService_t);
+                        case 2 -> nemoController.addImageToTopology(Images_st.getApi(), x, y, n.getName(), Topologia.NetworkService_t);
+                        case 3 -> nemoController.addImageToTopology(Images_st.getWan(), x, y, n.getName(), Topologia.NetworkService_t);
                     }
                 } catch (Exception e) {
                     throw new RuntimeException(e);
@@ -111,10 +111,10 @@ public class Topologia {
                     double x = center_m.get_x(p);
                     double y = center_m.get_y(p);
                     switch (system) {
-                        case 0 -> nemoController.addImageToTopology(Images_st.getWindowsWorkStetion(), x, y);
-                        case 1 -> nemoController.addImageToTopology(Images_st.getLinuxWorkStetion(), x, y);
-                        case 2 -> nemoController.addImageToTopology(Images_st.getLinuxServer(), x, y);
-                        case 3 -> nemoController.addImageToTopology(Images_st.getWindowsServer(), x, y);
+                        case 0 -> nemoController.addImageToTopology(Images_st.getWindowsWorkStetion(), x, y, p.getName(), Topologia.PC_t);
+                        case 1 -> nemoController.addImageToTopology(Images_st.getLinuxWorkStetion(), x, y,  p.getName(), Topologia.PC_t);
+                        case 2 -> nemoController.addImageToTopology(Images_st.getLinuxServer(), x, y,  p.getName(), Topologia.PC_t);
+                        case 3 -> nemoController.addImageToTopology(Images_st.getWindowsServer(), x, y,  p.getName(), Topologia.PC_t);
                     }
                 } catch (Exception e) {
                     throw new RuntimeException(e);
@@ -137,16 +137,16 @@ public class Topologia {
                     double x = center_m.get_x(v);
                     double y = center_m.get_y(v);
                     switch (system) {
-                        case 0 -> nemoController.addImageToTopology(Images_st.getWindowsWorkStetion(), x, y);
-                        case 1 -> nemoController.addImageToTopology(Images_st.getLinuxWorkStetion(), x, y);
-                        case 2 -> nemoController.addImageToTopology(Images_st.getLinuxServer(), x, y);
-                        case 3 -> nemoController.addImageToTopology(Images_st.getWindowsServer(), x, y);
-                        case 4 -> nemoController.addImageToTopology(Images_st.getRuter(), x, y);
-                        case 5 -> nemoController.addImageToTopology(Images_st.getSwitchL2(), x, y);
-                        case 6 -> nemoController.addImageToTopology(Images_st.getSwitchL3(), x, y);
-                        case 7 -> nemoController.addImageToTopology(Images_st.getFirewall(), x, y);
-                        case 8 -> nemoController.addImageToTopology(Images_st.getDb(), x, y);
-                        case 9 -> nemoController.addImageToTopology(Images_st.getApi(), x, y);
+                        case 0 -> nemoController.addImageToTopology(Images_st.getWindowsWorkStetion(), x, y, v.getName(), Topologia.VM_t);
+                        case 1 -> nemoController.addImageToTopology(Images_st.getLinuxWorkStetion(), x, y, v.getName(), Topologia.VM_t);
+                        case 2 -> nemoController.addImageToTopology(Images_st.getLinuxServer(), x, y, v.getName(), Topologia.VM_t);
+                        case 3 -> nemoController.addImageToTopology(Images_st.getWindowsServer(), x, y, v.getName(), Topologia.VM_t);
+                        case 4 -> nemoController.addImageToTopology(Images_st.getRuter(), x, y, v.getName(), Topologia.VM_t);
+                        case 5 -> nemoController.addImageToTopology(Images_st.getSwitchL2(), x, y, v.getName(), Topologia.VM_t);
+                        case 6 -> nemoController.addImageToTopology(Images_st.getSwitchL3(), x, y, v.getName(), Topologia.VM_t);
+                        case 7 -> nemoController.addImageToTopology(Images_st.getFirewall(), x, y, v.getName(), Topologia.VM_t);
+                        case 8 -> nemoController.addImageToTopology(Images_st.getDb(), x, y, v.getName(), Topologia.VM_t);
+                        case 9 -> nemoController.addImageToTopology(Images_st.getApi(), x, y, v.getName(), Topologia.VM_t);
                     }
                 } catch (Exception e) {
                     throw new RuntimeException(e);

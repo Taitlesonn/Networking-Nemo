@@ -3,12 +3,16 @@ package nemo.networking;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Point2D;
 import javafx.scene.CacheHint;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -33,7 +37,7 @@ public class NemoController {
     @FXML private BorderPane menu;
     @FXML private HBox top_menu;
     @FXML private Pane center_menu;
-    private Pane worldPane;
+    private List<Pane> worldPane = new ArrayList<>();
 
     @FXML private Button top_files;
     @FXML private Button top_help;
@@ -44,16 +48,7 @@ public class NemoController {
     @FXML private Button top_network_device;
     @FXML private Button top_network_service;
 
-    public static final class ImageRequest {
-        public final ImageView iv;
-        public final double x1000;
-        public final double y1000;
-
-        public ImageRequest(ImageView iv, double x1000, double y1000) {
-            this.iv = iv;
-            this.x1000 = x1000;
-            this.y1000 = y1000;
-        }
+    public record ImageRequest(ImageView iv, double x1000, double y1000) {
     }
 
     public final Mapper_t center_m = new Mapper_t();
@@ -116,7 +111,6 @@ public class NemoController {
 
         Platform.runLater(this::resizeAndRedrawGrid);
         Platform.runLater(this::resizeAndRedrawGrid);
-        startImagePoller();
     }
 
     @FXML
@@ -321,14 +315,17 @@ public class NemoController {
         applyZoom();
     }
 
-    private void initWorldPane() {
-        if (worldPane != null) return;
-        worldPane = new Pane();
-        worldPane.setPrefWidth(WORLD_COORD_SIZE);
-        worldPane.setPrefHeight(WORLD_COORD_SIZE);
-        worldPane.setStyle("-fx-background-color: rgba(0,0,0,0.02);");
-        contentGroup.getChildren().add(worldPane);
+    private void addWorldPane() {
+        if (worldPane.isEmpty()) {
+            Pane pane = new Pane();
+            pane.setPrefWidth(WORLD_COORD_SIZE);
+            pane.setPrefHeight(WORLD_COORD_SIZE);
+            pane.setStyle("-fx-background-color: rgba(0,0,0,0.02);");
+            worldPane.add(pane);
+            contentGroup.getChildren().add(pane);
+        }
     }
+
 
     private void resizeAndRedrawGrid() {
         if (center_menu == null) return;
@@ -394,9 +391,59 @@ public class NemoController {
     private double lastMouseY = 0;
     private boolean panning = false;
 
+
+
+
+    public void addImageToTopology(ImageView iv, double x1000, double y1000, String name, int type) {
+        if (iv == null) return;
+
+        iv.setFitWidth(64);
+        iv.setPreserveRatio(true);
+        iv.setSmooth(true);
+        iv.setPickOnBounds(true);
+
+        iv.setLayoutX(x1000);
+        iv.setLayoutY(y1000);
+
+        contentGroup.getChildren().add(iv);
+
+        makeDraggable(iv, name, type);
+        addDeleteContextMenu(iv);
+
+        iv.setCache(true);
+        iv.setCacheHint(CacheHint.SPEED);
+    }
+
+
+    private void makeDraggable(ImageView iv, String name, int type) {
+        final double[] mouseOffset = new double[2];
+
+        iv.setOnMousePressed(e -> {
+            if (!e.isPrimaryButtonDown()) return;
+            iv.toFront();
+
+            // obliczamy offset względem translateX/Y, nie layoutX/Y
+            mouseOffset[0] = e.getSceneX() - iv.getTranslateX();
+            mouseOffset[1] = e.getSceneY() - iv.getTranslateY();
+
+            e.consume();
+        });
+
+        iv.setOnMouseDragged(e -> {
+            if (!e.isPrimaryButtonDown()) return;
+
+            iv.setTranslateX(e.getSceneX() - mouseOffset[0]);
+            iv.setTranslateY(e.getSceneY() - mouseOffset[1]);
+
+            e.consume();
+        });
+    }
+
     private void setupPanHandlers() {
         if (center_menu == null || contentGroup == null) return;
+
         center_menu.addEventFilter(MouseEvent.MOUSE_PRESSED, ev -> {
+            if (isOnDevice(ev)) return;
             if (ev.isPrimaryButtonDown() || ev.isMiddleButtonDown()) {
                 panning = true;
                 lastMouseX = ev.getSceneX();
@@ -404,7 +451,9 @@ public class NemoController {
                 ev.consume();
             }
         });
+
         center_menu.addEventFilter(MouseEvent.MOUSE_DRAGGED, ev -> {
+            if (isOnDevice(ev)) return;
             if (!panning) return;
             double dx = ev.getSceneX() - lastMouseX;
             double dy = ev.getSceneY() - lastMouseY;
@@ -414,13 +463,17 @@ public class NemoController {
             contentGroup.setTranslateY(contentGroup.getTranslateY() + dy);
             ev.consume();
         });
+
         center_menu.addEventFilter(MouseEvent.MOUSE_RELEASED, ev -> {
+            if (isOnDevice(ev)) return;
             if (panning) {
                 panning = false;
                 ev.consume();
             }
         });
+
         center_menu.addEventFilter(MouseEvent.MOUSE_CLICKED, ev -> {
+            if (isOnDevice(ev)) return;
             if (ev.getClickCount() == 2) {
                 zoom = 1.0;
                 contentGroup.setTranslateX(0);
@@ -432,116 +485,24 @@ public class NemoController {
         });
     }
 
-    private ImageView copyImageView(ImageView src) {
-        ImageView copy = new ImageView();
-        Image img = src == null ? null : src.getImage();
-        if (img != null) copy.setImage(img);
-        if (src != null) {
-            copy.setPreserveRatio(src.isPreserveRatio());
-            copy.setFitWidth(src.getFitWidth());
-            copy.setFitHeight(src.getFitHeight());
-            copy.setRotate(src.getRotate());
-            copy.setOpacity(src.getOpacity());
-            copy.setScaleX(src.getScaleX());
-            copy.setScaleY(src.getScaleY());
-            copy.setSmooth(src.isSmooth());
+    private boolean isOnDevice(MouseEvent ev) {
+        if (!(ev.getTarget() instanceof Node n)) return false;
+        while (n != null) {
+            if (n instanceof ImageView) return true;
+            n = n.getParent();
         }
-        return copy;
+        return false;
     }
 
-    public void addImageToTopology(ImageView iv, double x1000, double y1000) {
-        if (worldPane == null) initWorldPane();
-        if (iv == null) return;
-        ImageView node = copyImageView(iv);
-        double lx = Math.max(0.0, Math.min(WORLD_COORD_SIZE, x1000));
-        double ly = Math.max(0.0, Math.min(WORLD_COORD_SIZE, y1000));
-        node.setPreserveRatio(true);
-        if (node.getFitWidth() <= 0 && node.getFitHeight() <= 0) node.setFitWidth(DEFAULT_IMAGE_SIZE);
-        double w = (node.getFitWidth() > 0) ? node.getFitWidth() : node.getBoundsInLocal().getWidth();
-        double h;
-        if (node.getFitHeight() > 0) h = node.getFitHeight();
-        else {
-            Image image = node.getImage();
-            if (image != null && image.getWidth() > 0) {
-                double ratio = image.getHeight() / image.getWidth();
-                h = w * ratio;
-            } else {
-                h = w;
-            }
-        }
-        double layoutX = lx - (w / 2.0);
-        double layoutY = ly - (h / 2.0);
-        layoutX = Math.max(0.0, Math.min(WORLD_COORD_SIZE - w, layoutX));
-        layoutY = Math.max(0.0, Math.min(WORLD_COORD_SIZE - h, layoutY));
-        node.setLayoutX(layoutX);
-        node.setLayoutY(layoutY);
-        worldPane.getChildren().add(node);
-        node.setCache(true);
-        node.setCacheHint(CacheHint.SPEED);
-    }
-
-    public void addImagesToTopology(ImageRequest... requests) {
-        if (requests == null || requests.length == 0) return;
-        for (ImageRequest r : requests) {
-            if (r == null) continue;
-            addImageToTopology(r.iv, r.x1000, r.y1000);
-        }
-    }
-
-    public static void enqueueImageForAddition(ImageView iv, double x1000, double y1000) {
-        if (iv == null) return;
-        queuedImages.add(new ImageRequest(iv, x1000, y1000));
-    }
-
-    public static void enqueueImagesForAddition(ImageRequest... requests) {
-        if (requests == null || requests.length == 0) return;
-        for (ImageRequest r : requests) {
-            if (r != null) queuedImages.add(r);
-        }
-    }
-
-    private void startImagePoller() {
-        if (imagePollerExecutor != null && !imagePollerExecutor.isShutdown()) return;
-        imagePollerExecutor = Executors.newSingleThreadScheduledExecutor(r -> {
-            Thread t = new Thread(r, "image-poller");
-            t.setDaemon(true);
-            return t;
+    private void addDeleteContextMenu(ImageView iv) {
+        ContextMenu cm = new ContextMenu();
+        MenuItem deleteItem = new MenuItem("Usuń");
+        deleteItem.setOnAction(evt -> {
+            cm.hide();
+            contentGroup.getChildren().remove(iv);
         });
-        imagePollerExecutor.scheduleWithFixedDelay(() -> {
-            synchronized (imagePollerLock) {
-                try {
-                    if (queuedImages.isEmpty()) return;
-                    List<ImageRequest> batch = new ArrayList<>();
-                    ImageRequest req;
-                    while ((req = queuedImages.poll()) != null) batch.add(req);
-                    if (batch.isEmpty()) return;
-                    Platform.runLater(() -> {
-                        try {
-                            for (ImageRequest r : batch) addImageToTopology(r.iv, r.x1000, r.y1000);
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                    });
-                } catch (Throwable t) {
-                    t.printStackTrace();
-                }
-            }
-        }, 0L, 500L, TimeUnit.MILLISECONDS);
-    }
+        cm.getItems().add(deleteItem);
 
-    public void stopImagePoller() {
-        if (imagePollerExecutor != null) {
-            try {
-                imagePollerExecutor.shutdownNow();
-                imagePollerExecutor.awaitTermination(200, TimeUnit.MILLISECONDS);
-            } catch (InterruptedException ignored) {
-            } finally {
-                imagePollerExecutor = null;
-            }
-        }
-    }
-
-    public void shutdownController() {
-        stopImagePoller();
+        iv.setOnContextMenuRequested(e -> cm.show(iv, e.getScreenX(), e.getScreenY()));
     }
 }

@@ -7,146 +7,113 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Mapper_t {
-    public record Point(int x, int y){ }
+    public record Point(int x, int y) { }
 
     public final AtomicBoolean running = new AtomicBoolean(false);
 
     private final Random rand = new Random();
-    private final Map<String, List<? super Object>> devices = new ConcurrentHashMap<>();
+    private final Map<String, List<Object>> devices = new ConcurrentHashMap<>();
     private final Map<Object, Point> pointMap = new ConcurrentHashMap<>();
 
-    private final String NetworkDevice_s = "nd";
-    private final String NetworkService_s = "ns";
-    private final String PC_s = "pc";
-    private final String VM_s = "vm";
+    private static final String NETWORK_DEVICE = "nd";
+    private static final String NETWORK_SERVICE = "ns";
+    private static final String PC = "pc";
+    private static final String VM = "vm";
 
     public Mapper_t() {
-        devices.put(NetworkDevice_s, new ArrayList<>());
-        devices.put(NetworkService_s, new ArrayList<>());
-        devices.put(PC_s, new ArrayList<>());
-        devices.put(VM_s, new ArrayList<>());
+        devices.put(NETWORK_DEVICE, new ArrayList<>());
+        devices.put(NETWORK_SERVICE, new ArrayList<>());
+        devices.put(PC, new ArrayList<>());
+        devices.put(VM, new ArrayList<>());
         running.set(true);
     }
 
-    public void setRunning(boolean b){ this.running.set(b); }
-    public boolean getRunning(){ return this.running.get(); }
+    public void setRunning(boolean b) {
+        running.set(b);
+    }
 
-    public Boolean move_o(int new_x, int new_y, Object o){
+    public boolean getRunning() {
+        return running.get();
+    }
+
+    public boolean move_o(int new_x, int new_y, Object o) {
         Objects.requireNonNull(o, "NULL Object in Mapper");
-        if(!pointMap.containsKey(o)){
+        if (!pointMap.containsKey(o)) {
             return false;
         }
-        Point p = new Point(new_x, new_y);
-        if(pointMap.containsValue(p)){
+        Point newPoint = new Point(new_x, new_y);
+        if (pointMap.containsValue(newPoint)) {
             return false;
         }
-        pointMap.replace(o, p);
+        pointMap.put(o, newPoint);
         return true;
     }
 
-
-    public boolean remove_device(int type, Object o){
-        switch (type){
-            case Topologia.NetworkDevice_t -> {
-                if(devices.get(NetworkDevice_s).contains(o) && pointMap.containsKey(o)){
-                    devices.get(NetworkDevice_s).remove(o);
-                    pointMap.remove(o);
-                    return true;
-                }
-            }
-            case Topologia.NetworkService_t -> {
-                if(devices.get(NetworkService_s).contains(o) && pointMap.containsKey(o)){
-                    devices.get(NetworkService_s).remove(o);
-                    pointMap.remove(o);
-                    return true;
-                }
-            }
-            case Topologia.PC_t -> {
-                if(devices.get(PC_s).contains(o) && pointMap.containsKey(o)){
-                    devices.get(PC_s).remove(o);
-                    pointMap.remove(o);
-                    return true;
-                }
-            }
-            case Topologia.VM_t -> {
-                if(devices.get(VM_s).contains(o) && pointMap.containsKey(o)){
-                    devices.get(VM_s).remove(o);
-                    pointMap.remove(o);
-                    return true;
-                }
-            }
+    public boolean remove_device(int type, Object o) {
+        Objects.requireNonNull(o, "NULL Object in Mapper");
+        String key = deviceKey(type);
+        if (key == null) {
+            return false;
+        }
+        if (devices.get(key).remove(o)) {
+            pointMap.remove(o);
+            return true;
         }
         return false;
     }
 
-
-    public boolean add_device(int type, Object o){
-        Objects.requireNonNull(o, "NULL objet in Mapper_t");
-        int c = 0;
-        int los_x;
-        int los_y;
-
-        while (true){
-            if(c >= 1000){
-                return false;
-            }
-            los_x = this.rand.nextInt(1000);
-            los_y = this.rand.nextInt(1000);
-
-            if(!pointMap.containsValue(new Point(los_x, los_y))){ break; }
-            c++;
+    public boolean add_device(int type, Object o) {
+        Objects.requireNonNull(o, "NULL Object in Mapper_t");
+        String key = deviceKey(type);
+        if (key == null) {
+            return false;
         }
 
-        switch (type){
-            case Topologia.NetworkDevice_t -> {
-                devices.get(NetworkDevice_s).add(o);
-                pointMap.put(o, new Point(los_x, los_y));
-                return true;
-            }
-            case Topologia.NetworkService_t -> {
-                devices.get(NetworkService_s).add(o);
-                pointMap.put(o, new Point(los_x, los_y));
-                return true;
-            }
-            case Topologia.PC_t -> {
-                devices.get(PC_s).add(o);
-                pointMap.put(o, new Point(los_x, los_y));
-                return true;
-            }
-            case Topologia.VM_t -> {
-                devices.get(VM_s).add(o);
-                pointMap.put(o, new Point(los_x, los_y));
-                return true;
-            }
+        Point newPoint = generateUniquePoint(1000, 1000, 1000);
+        if (newPoint == null) {
+            return false;
         }
 
-        return false;
+        devices.get(key).add(o);
+        pointMap.put(o, newPoint);
+        return true;
     }
 
-
-    public double get_x(Object o){
+    public double get_x(Object o) {
         Point p = pointMap.get(o);
-        return (p == null) ? Double.NaN : (double) p.x;
+        return (p == null) ? Double.NaN : p.x;
     }
 
-    public double get_y(Object o){
+    public double get_y(Object o) {
         Point p = pointMap.get(o);
-        return (p == null) ? Double.NaN : (double) p.y;
+        return (p == null) ? Double.NaN : p.y;
     }
 
-    /**
-     * Zwraca Optional<Point> jeśli obiekt ma przypisaną pozycję.
-     */
     public Optional<Point> getPoint(Object o) {
         return Optional.ofNullable(pointMap.get(o));
     }
 
-    /**
-     * Zwraca liczbę punktów (maszyn) aktualnie w mapperze.
-     */
     public int getPointsCount() {
         return pointMap.size();
     }
 
+    private String deviceKey(int type) {
+        return switch (type) {
+            case Topologia.NetworkDevice_t -> NETWORK_DEVICE;
+            case Topologia.NetworkService_t -> NETWORK_SERVICE;
+            case Topologia.PC_t -> PC;
+            case Topologia.VM_t -> VM;
+            default -> null;
+        };
+    }
 
+    private Point generateUniquePoint(int maxX, int maxY, int maxAttempts) {
+        for (int attempts = 0; attempts < maxAttempts; attempts++) {
+            Point candidate = new Point(rand.nextInt(maxX), rand.nextInt(maxY));
+            if (!pointMap.containsValue(candidate)) {
+                return candidate;
+            }
+        }
+        return null;
+    }
 }
