@@ -192,9 +192,6 @@ public class Topologia {
         Optional<NetworkDevice> found = findNetworkDevice(Name);
         if (found.isPresent()) {
             NetworkDevice nd = found.get();
-            if (center_m != null && !center_m.remove_device(NetworkDevice_t, nd)) {
-                System.err.println("ERROR in center Network Device");
-            }
             return networkDevices.remove(nd);
         }
         return false;
@@ -205,9 +202,6 @@ public class Topologia {
         Optional<NetworkService> found = findNetworkService(Name);
         if (found.isPresent()) {
             NetworkService ns = found.get();
-            if (center_m != null && !center_m.remove_device(NetworkService_t, ns)) {
-                System.err.println("ERROR in center Network Service delete");
-            }
             return networkServices.remove(ns);
         }
         return false;
@@ -218,9 +212,6 @@ public class Topologia {
         Optional<PC> found = findPC(Name);
         if (found.isPresent()) {
             PC p = found.get();
-            if (center_m != null && !center_m.remove_device(PC_t, p)) {
-                System.err.println("ERROR in center PC delete");
-            }
             return pcs.remove(p);
         }
         return false;
@@ -231,9 +222,6 @@ public class Topologia {
         Optional<VM> found = findVM(Name);
         if (found.isPresent()) {
             VM v = found.get();
-            if (center_m != null && !center_m.remove_device(VM_t, v)) {
-                System.err.println("ERROR in center VM delete");
-            }
             return vms.remove(v);
         }
         return false;

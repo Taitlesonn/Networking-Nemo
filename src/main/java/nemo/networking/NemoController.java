@@ -23,11 +23,16 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import nemo.networking.Devices.NetworkDevice;
+import nemo.networking.Devices.NetworkService;
+import nemo.networking.Devices.PC;
+import nemo.networking.Devices.VM;
 import nemo.networking.Devices.maper.Mapper_t;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -408,7 +413,7 @@ public class NemoController {
         contentGroup.getChildren().add(iv);
 
         makeDraggable(iv, name, type);
-        addDeleteContextMenu(iv);
+        addDeleteContextMenu(iv, name, type);
 
         iv.setCache(true);
         iv.setCacheHint(CacheHint.SPEED);
@@ -494,11 +499,45 @@ public class NemoController {
         return false;
     }
 
-    private void addDeleteContextMenu(ImageView iv) {
+    private void addDeleteContextMenu(ImageView iv, String name, int type) {
         ContextMenu cm = new ContextMenu();
         MenuItem deleteItem = new MenuItem("Usuń");
         deleteItem.setOnAction(evt -> {
             cm.hide();
+            switch (type){
+                case Topologia.NetworkDevice_t -> {
+                    for(NetworkDevice n : Topologia.getNetworkDevices()){
+                        if(Objects.equals(n.getName(), name)){
+                            this.center_m.remove_device(type, n);
+                        }
+                    }
+                    Topologia.delete_network_device(name);
+                }
+                case Topologia.NetworkService_t -> {
+                    for(NetworkService n : Topologia.getNetworkServices()){
+                        if(Objects.equals(n.getName(), name)){
+                            this.center_m.remove_device(type, n);
+                        }
+                    }
+                    Topologia.delete_network_service(name);
+                }
+                case Topologia.PC_t -> {
+                    for(PC p : Topologia.getPcs()){
+                        if(Objects.equals(p.getName(), name)){
+                            this.center_m.remove_device(type, p);
+                        }
+                    }
+                    Topologia.delete_pc(name);
+                }
+                case Topologia.VM_t -> {
+                    for(VM v : Topologia.getVms()){
+                        if(Objects.equals(v.getName(), name)){
+                            this.center_m.remove_device(type, v);
+                        }
+                    }
+                    Topologia.delete_vm(name);
+                }
+            }
             contentGroup.getChildren().remove(iv);
         });
         cm.getItems().add(deleteItem);

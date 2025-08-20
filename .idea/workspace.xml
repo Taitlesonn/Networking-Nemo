@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="90c57be0-a485-4af8-9375-64f5647ccc72" name="Changes" comment="Poprawa czytelności oraz optymalizacji topologi ( center panel). Powoli można dodawać obiekty">
+    <list default="true" id="90c57be0-a485-4af8-9375-64f5647ccc72" name="Changes" comment="Dodawanie obiektów i usuwanie do topologi">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/Devices/maper/Mapper_t.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/Devices/maper/Mapper_t.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/Nemo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/Nemo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/NemoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/NemoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/Topologia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/Topologia.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -253,7 +250,15 @@
       <option name="project" value="LOCAL" />
       <updated>1755688604080</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Dodawanie obiektów i usuwanie do topologi">
+      <option name="closed" value="true" />
+      <created>1755693680901</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1755693680901</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -274,6 +279,7 @@
     <MESSAGE value="async close event fix" />
     <MESSAGE value="Przygotowania do faktycznej topologi w centrum" />
     <MESSAGE value="Poprawa czytelności oraz optymalizacji topologi ( center panel). Powoli można dodawać obiekty" />
-    <option name="LAST_COMMIT_MESSAGE" value="Poprawa czytelności oraz optymalizacji topologi ( center panel). Powoli można dodawać obiekty" />
+    <MESSAGE value="Dodawanie obiektów i usuwanie do topologi" />
+    <option name="LAST_COMMIT_MESSAGE" value="Dodawanie obiektów i usuwanie do topologi" />
   </component>
 </project>
