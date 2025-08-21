@@ -387,7 +387,7 @@ public class NemoController {
 
         contentGroup.getChildren().add(iv);
 
-        makeDraggable(iv, name, type);
+        makeDraggable(iv);
         addContextMenu(iv, name, type);
 
 
@@ -396,7 +396,7 @@ public class NemoController {
     }
 
 
-    private void makeDraggable(ImageView iv, String name, int type) {
+    private void makeDraggable(ImageView iv) {
         final double[] mouseOffset = new double[2];
 
         iv.setOnMousePressed(e -> {
@@ -404,8 +404,11 @@ public class NemoController {
             iv.toFront();
 
             // obliczamy offset względem translateX/Y, nie layoutX/Y
-            mouseOffset[0] = e.getSceneX() - iv.getTranslateX();
-            mouseOffset[1] = e.getSceneY() - iv.getTranslateY();
+            double localX = contentGroup.sceneToLocal(e.getSceneX(), e.getSceneY()).getX();
+            double localY = contentGroup.sceneToLocal(e.getSceneX(), e.getSceneY()).getY();
+            mouseOffset[0] = localX - iv.getLayoutX();
+            mouseOffset[1] = localY - iv.getLayoutY();
+
 
             e.consume();
         });
@@ -413,9 +416,11 @@ public class NemoController {
         iv.setOnMouseDragged(e -> {
             if (!e.isPrimaryButtonDown()) return;
 
-            iv.setTranslateX(e.getSceneX() - mouseOffset[0]);
-            iv.setTranslateY(e.getSceneY() - mouseOffset[1]);
+            double localX = contentGroup.sceneToLocal(e.getSceneX(), e.getSceneY()).getX();
+            double localY = contentGroup.sceneToLocal(e.getSceneX(), e.getSceneY()).getY();
 
+            iv.setLayoutX(localX - mouseOffset[0]);
+            iv.setLayoutY(localY - mouseOffset[1]);
             e.consume();
         });
     }
@@ -577,14 +582,26 @@ public class NemoController {
                 } else if (selectedDevice != iv) {
                     // Tworzymy połączenie
                     Line line = new Line();
-                    line.startXProperty().bind(selectedDevice.layoutXProperty().add(selectedDevice.translateXProperty()).add(selectedDevice.getFitWidth()/2));
-                    line.startYProperty().bind(selectedDevice.layoutYProperty().add(selectedDevice.translateYProperty()).add(selectedDevice.getFitHeight()/2));
-                    line.endXProperty().bind(iv.layoutXProperty().add(iv.translateXProperty()).add(iv.getFitWidth()/2));
-                    line.endYProperty().bind(iv.layoutYProperty().add(iv.translateYProperty()).add(iv.getFitHeight()/2));
+
+                    line.startXProperty().bind(
+                            selectedDevice.boundsInParentProperty().map(b -> b.getMinX() + b.getWidth() / 2)
+                    );
+                    line.startYProperty().bind(
+                            selectedDevice.boundsInParentProperty().map(b -> b.getMinY() + b.getHeight() / 2)
+                    );
+
+                    line.endXProperty().bind(
+                            iv.boundsInParentProperty().map(b -> b.getMinX() + b.getWidth() / 2)
+                    );
+                    line.endYProperty().bind(
+                            iv.boundsInParentProperty().map(b -> b.getMinY() + b.getHeight() / 2)
+                    );
+
                     line.setStrokeWidth(2);
-                    line.setStroke(Color.BLUE);
+                    line.setStroke(Color.GREY);
                     contentGroup.getChildren().addFirst(line);
                     connections.add(line);
+
 
                     deviceConnections.computeIfAbsent(selectedDevice, k -> new ArrayList<>()).add(line);
                     deviceConnections.computeIfAbsent(iv, k -> new ArrayList<>()).add(line);

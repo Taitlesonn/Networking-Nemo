@@ -4,19 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="90c57be0-a485-4af8-9375-64f5647ccc72" name="Changes" comment="łączenie &quot;działa&quot;. Do poprawy by Maszyny nie latały po całej planszy przy przesuwaniu">
+    <list default="true" id="90c57be0-a485-4af8-9375-64f5647ccc72" name="Changes" comment="Proste poprawki i usunięcie zbędnych lub nie urzywanych elemntów">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/Devices/Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/Devices/Connection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/Devices/maper/Mapper_t.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/Devices/maper/Mapper_t.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/Devices/root_dev.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/Devices/root_dev.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/Inofs_devices_hbox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/Inofs_devices_hbox.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/Nemo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/Nemo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/NemoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/NemoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/New_b_Conntroller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/New_b_Conntroller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/Topologia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/Topologia.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -284,8 +274,27 @@
       <option name="project" value="LOCAL" />
       <updated>1755698305146</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Proste poprawki i usunięcie zbędnych lub nie urzywanych elemntów">
+      <option name="closed" value="true" />
+      <created>1755803672791</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1755803672791</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Początek nemo" />
@@ -308,6 +317,7 @@
     <MESSAGE value="Dodawanie obiektów i usuwanie do topologi" />
     <MESSAGE value="fix delete in tp" />
     <MESSAGE value="łączenie &quot;działa&quot;. Do poprawy by Maszyny nie latały po całej planszy przy przesuwaniu" />
-    <option name="LAST_COMMIT_MESSAGE" value="łączenie &quot;działa&quot;. Do poprawy by Maszyny nie latały po całej planszy przy przesuwaniu" />
+    <MESSAGE value="Proste poprawki i usunięcie zbędnych lub nie urzywanych elemntów" />
+    <option name="LAST_COMMIT_MESSAGE" value="Proste poprawki i usunięcie zbędnych lub nie urzywanych elemntów" />
   </component>
 </project>
