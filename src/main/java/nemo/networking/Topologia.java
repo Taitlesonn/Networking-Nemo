@@ -317,40 +317,27 @@ public class Topologia {
         return false;
     }
 
-    public static boolean add_note(String name, int type, String note) {
+    public static void add_note(String name, int type, String note) {
         Objects.requireNonNull(name, "NUll name error");
         Objects.requireNonNull(note, "NUll note error");
         switch (type) {
             case NetworkDevice_t -> {
                 Optional<NetworkDevice> nd = findNetworkDevice(name);
-                if (nd.isPresent()) {
-                    nd.get().setNotes(note);
-                    return true;
-                }
+                nd.ifPresent(networkDevice -> networkDevice.setNotes(note));
             }
             case NetworkService_t -> {
                 Optional<NetworkService> ns = findNetworkService(name);
-                if (ns.isPresent()) {
-                    ns.get().setNotes(note);
-                    return true;
-                }
+                ns.ifPresent(networkService -> networkService.setNotes(note));
             }
             case PC_t -> {
                 Optional<PC> p = findPC(name);
-                if (p.isPresent()) {
-                    p.get().setNotes(note);
-                    return true;
-                }
+                p.ifPresent(pc -> pc.setNotes(note));
             }
             case VM_t -> {
                 Optional<VM> v = findVM(name);
-                if (v.isPresent()) {
-                    v.get().setNotes(note);
-                    return true;
-                }
+                v.ifPresent(vm -> vm.setNotes(note));
             }
         }
-        return false;
     }
 
     public static void setClassys(Mapper_t m, NemoController n) {
@@ -379,4 +366,6 @@ public class Topologia {
     public static List<VM> getVms() {
         return Collections.unmodifiableList(vms);
     }
+
+    public static int getMachineCunt(){return Topologia.networkDevices.size() + Topologia.networkServices.size() + Topologia.pcs.size() + Topologia.vms.size(); }
 }

@@ -13,7 +13,6 @@ public class New_b_Conntroller {
     @FXML private Button ns;
     @FXML private Button nd;
     @FXML private Button pc;
-    @FXML private Button submit;
     @FXML private VBox center;
     private int type_r = 0;
 
@@ -95,24 +94,11 @@ public class New_b_Conntroller {
 
         final VBox ipContainer = new VBox(6);
 
-        Map<String, Integer> currentMap;
         switch (this.type_r) {
-            case 1 -> {
-                this.device_type.getItems().addAll(PC_MAP.keySet());
-                currentMap = PC_MAP;
-            }
-            case 2 -> {
-                this.device_type.getItems().addAll(NS_MAP.keySet());
-                currentMap = NS_MAP;
-            }
-            case 3 -> {
-                this.device_type.getItems().addAll(ND_MAP.keySet());
-                currentMap = ND_MAP;
-            }
-            default -> {
-                this.device_type.getItems().addAll(VM_MAP.keySet());
-                currentMap = VM_MAP;
-            }
+            case 1 ->  this.device_type.getItems().addAll(PC_MAP.keySet());
+            case 2 -> this.device_type.getItems().addAll(NS_MAP.keySet());
+            case 3 -> this.device_type.getItems().addAll(ND_MAP.keySet());
+            default -> this.device_type.getItems().addAll(VM_MAP.keySet());
         }
 
         // Listener dla wyboru ile IP — aktualizuje ipContainer

@@ -1,6 +1,8 @@
 package nemo.networking.Devices.maper;
 
 import nemo.networking.Topologia;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -49,17 +51,15 @@ public class Mapper_t {
         return true;
     }
 
-    public boolean remove_device(int type, Object o) {
+    public void remove_device(int type, Object o) {
         Objects.requireNonNull(o, "NULL Object in Mapper");
         String key = deviceKey(type);
         if (key == null) {
-            return false;
+            return;
         }
         if (devices.get(key).remove(o)) {
             pointMap.remove(o);
-            return true;
         }
-        return false;
     }
 
     public boolean add_device(int type, Object o) {
@@ -69,7 +69,7 @@ public class Mapper_t {
             return false;
         }
 
-        Point newPoint = generateUniquePoint(1000, 1000, 1000);
+        Point newPoint = generateUniquePoint();
         if (newPoint == null) {
             return false;
         }
@@ -93,11 +93,9 @@ public class Mapper_t {
         return Optional.ofNullable(pointMap.get(o));
     }
 
-    public int getPointsCount() {
-        return pointMap.size();
-    }
 
-    private String deviceKey(int type) {
+    @Contract(pure = true)
+    private @Nullable String deviceKey(int type) {
         return switch (type) {
             case Topologia.NetworkDevice_t -> NETWORK_DEVICE;
             case Topologia.NetworkService_t -> NETWORK_SERVICE;
@@ -107,9 +105,10 @@ public class Mapper_t {
         };
     }
 
-    private Point generateUniquePoint(int maxX, int maxY, int maxAttempts) {
-        for (int attempts = 0; attempts < maxAttempts; attempts++) {
-            Point candidate = new Point(rand.nextInt(maxX), rand.nextInt(maxY));
+    @org.jetbrains.annotations.Nullable
+    private Point generateUniquePoint() {
+        for (int attempts = 0; attempts < 1000; attempts++) {
+            Point candidate = new Point(rand.nextInt(1000), rand.nextInt(1000));
             if (!pointMap.containsValue(candidate)) {
                 return candidate;
             }

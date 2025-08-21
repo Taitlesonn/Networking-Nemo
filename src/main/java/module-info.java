@@ -4,6 +4,8 @@ module nemo.networkingnemo {
 
     requires org.kordamp.bootstrapfx.core;
     requires javafx.graphics;
+    requires org.jetbrains.annotations;
+    requires java.logging;
 
     opens nemo.networking to javafx.fxml;
     exports nemo.networking;

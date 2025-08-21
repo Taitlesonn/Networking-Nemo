@@ -1,7 +1,6 @@
 package nemo.networking;
 
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.CacheHint;
@@ -33,12 +32,14 @@ import nemo.networking.Devices.maper.Mapper_t;
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class NemoController {
     @FXML private BorderPane menu;
     @FXML private HBox top_menu;
     @FXML private Pane center_menu;
-    private List<Pane> worldPane = new ArrayList<>();
+    private final List<Pane> worldPane = new ArrayList<>();
 
     @FXML private Button top_files;
     @FXML private Button top_help;
@@ -60,7 +61,6 @@ public class NemoController {
     private final double BASE_GRID_STEP = 40.0;
     private final double MIN_ZOOM = 0.25;
     private final double MAX_ZOOM = 4.0;
-    private static final double WORLD_COORD_SIZE = 32.0;
     private static final double DEFAULT_IMAGE_SIZE = 64.0;
 
     // Łączenie i rozłączenie
@@ -68,20 +68,10 @@ public class NemoController {
     private final Map<ImageView, List<Line>> deviceConnections = new ConcurrentHashMap<>();
     private ImageView selectedDevice = null;
 
+    private static final Logger LOGGER = Logger.getLogger(NemoController.class.getName());
 
 
 
-    public final Thread center_a;
-    {
-        center_a = new Thread(() -> {
-            try {
-                Thread.sleep(Long.MAX_VALUE);
-            } catch (InterruptedException ignored) {
-            }
-        }, "center_a-compat");
-        center_a.setDaemon(true);
-        center_a.start();
-    }
 
     @FXML
     private void initialize() {
@@ -102,7 +92,7 @@ public class NemoController {
             center_menu.addEventFilter(ScrollEvent.SCROLL, ev -> {
                 double delta = ev.getDeltaY();
                 double factor = Math.pow(1.001, delta);
-                double newZoom = clamp(zoom * factor, MIN_ZOOM, MAX_ZOOM);
+                double newZoom = clamp(zoom * factor);
                 if (Math.abs(newZoom - zoom) > 1e-5) {
                     zoom = newZoom;
                     applyZoom();
@@ -139,7 +129,7 @@ public class NemoController {
             newStage.show();
             newStage.centerOnScreen();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to open New window", e);
         }
     }
 
@@ -174,7 +164,7 @@ public class NemoController {
             newStage.sizeToScene();
             newStage.centerOnScreen();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to open network device window", e);
         }
     }
 
@@ -209,7 +199,7 @@ public class NemoController {
             newStage.sizeToScene();
             newStage.centerOnScreen();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to open network service window", e);
         }
     }
 
@@ -244,7 +234,7 @@ public class NemoController {
             newStage.sizeToScene();
             newStage.centerOnScreen();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to open vm window", e);
         }
     }
 
@@ -276,7 +266,7 @@ public class NemoController {
             newStage.sizeToScene();
             newStage.centerOnScreen();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to open server window", e);
         }
     }
 
@@ -311,7 +301,7 @@ public class NemoController {
             newStage.sizeToScene();
             newStage.centerOnScreen();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to open computer window", e);
         }
     }
 
@@ -373,8 +363,8 @@ public class NemoController {
         contentGroup.setScaleY(zoom);
     }
 
-    private double clamp(double v, double a, double b) {
-        return Math.max(a, Math.min(b, v));
+    private double clamp(double v) {
+        return Math.max(0.25, Math.min(4.0, v));
     }
 
     private double lastMouseX = 0;
@@ -532,40 +522,7 @@ public class NemoController {
                     }
                 }
             }
-            contentGroup.getChildren().remove(iv);
-        });
 
-        // Connect
-        MenuItem connect = new MenuItem("Connect");
-        connect.setOnAction(e -> {
-            cm.hide();
-            if (selectedDevice == null) {
-                selectedDevice = iv;
-                iv.setEffect(new DropShadow(20, Color.GREEN));
-            } else if (selectedDevice != iv) {
-                // Tworzymy połączenie
-                Line line = new Line();
-                line.startXProperty().bind(selectedDevice.layoutXProperty().add(selectedDevice.translateXProperty()).add(selectedDevice.getFitWidth()/2));
-                line.startYProperty().bind(selectedDevice.layoutYProperty().add(selectedDevice.translateYProperty()).add(selectedDevice.getFitHeight()/2));
-                line.endXProperty().bind(iv.layoutXProperty().add(iv.translateXProperty()).add(iv.getFitWidth()/2));
-                line.endYProperty().bind(iv.layoutYProperty().add(iv.translateYProperty()).add(iv.getFitHeight()/2));
-                line.setStrokeWidth(2);
-                line.setStroke(Color.BLUE);
-                contentGroup.getChildren().addFirst(line);
-                connections.add(line);
-
-                deviceConnections.computeIfAbsent(selectedDevice, k -> new ArrayList<>()).add(line);
-                deviceConnections.computeIfAbsent(iv, k -> new ArrayList<>()).add(line);
-
-                selectedDevice.setEffect(null);
-                selectedDevice = null;
-            }
-        });
-
-        // Disconnect
-        MenuItem disconnect = new MenuItem("Disconnect");
-        disconnect.setOnAction(e -> {
-            cm.hide();
             List<Line> lines = deviceConnections.get(iv);
             if (lines != null) {
                 List<Line> copy = new ArrayList<>(lines);
@@ -576,10 +533,68 @@ public class NemoController {
                 }
                 lines.clear();
             }
+            contentGroup.getChildren().remove(iv);
         });
+
+        // Connect
+        MenuItem connect = getConnect(iv, cm);
+
+        // Disconnect
+        MenuItem disconnect = getDisconnect(iv, cm);
         cm.getItems().addAll(deleteItem, connect, disconnect);
 
         iv.setOnContextMenuRequested(e -> cm.show(iv, e.getScreenX(), e.getScreenY()));
+    }
+
+    private MenuItem getDisconnect(ImageView iv, ContextMenu cm) {
+        MenuItem disconnect = new MenuItem("Disconnect");
+        disconnect.setOnAction(e -> {
+            cm.hide();
+            if(Topologia.getMachineCunt() >=2){
+                List<Line> lines = deviceConnections.get(iv);
+                if (lines != null) {
+                    List<Line> copy = new ArrayList<>(lines);
+                    for (Line line : copy) {
+                        contentGroup.getChildren().remove(line);
+                        connections.remove(line);
+                        deviceConnections.forEach((d, l) -> l.remove(line));
+                    }
+                    lines.clear();
+                }
+            }
+        });
+        return disconnect;
+    }
+
+    private MenuItem getConnect(ImageView iv, ContextMenu cm) {
+        MenuItem connect = new MenuItem("Connect");
+        connect.setOnAction(e -> {
+            cm.hide();
+            if(Topologia.getMachineCunt() >= 2){
+                if (selectedDevice == null) {
+                    selectedDevice = iv;
+                    iv.setEffect(new DropShadow(20, Color.GREEN));
+                } else if (selectedDevice != iv) {
+                    // Tworzymy połączenie
+                    Line line = new Line();
+                    line.startXProperty().bind(selectedDevice.layoutXProperty().add(selectedDevice.translateXProperty()).add(selectedDevice.getFitWidth()/2));
+                    line.startYProperty().bind(selectedDevice.layoutYProperty().add(selectedDevice.translateYProperty()).add(selectedDevice.getFitHeight()/2));
+                    line.endXProperty().bind(iv.layoutXProperty().add(iv.translateXProperty()).add(iv.getFitWidth()/2));
+                    line.endYProperty().bind(iv.layoutYProperty().add(iv.translateYProperty()).add(iv.getFitHeight()/2));
+                    line.setStrokeWidth(2);
+                    line.setStroke(Color.BLUE);
+                    contentGroup.getChildren().addFirst(line);
+                    connections.add(line);
+
+                    deviceConnections.computeIfAbsent(selectedDevice, k -> new ArrayList<>()).add(line);
+                    deviceConnections.computeIfAbsent(iv, k -> new ArrayList<>()).add(line);
+
+                    selectedDevice.setEffect(null);
+                    selectedDevice = null;
+                }
+            }
+        });
+        return connect;
     }
 
 }

@@ -23,7 +23,6 @@ public class Nemo extends Application {
             NemoController n = fxmlLoader.getController();
             // Wyłączanie wątków
             n.center_m.setRunning(false);
-            n.center_a.interrupt();
         });
         stage.centerOnScreen();
         stage.setScene(scene);

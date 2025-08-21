@@ -1,6 +1,5 @@
 package nemo.networking.Devices;
 
-import java.util.List;
 
 public class root_dev {
 
@@ -8,7 +7,7 @@ public class root_dev {
     private int type;
     private boolean runnig;
     private String notes;
-    private  String[] ips = new String[4];
+    private final String[] ips = new String[4];
 
     private boolean valid_ip(String ip) {
         if (ip == null || ip.isEmpty() || ip.length() > 15) {

@@ -1,11 +1,8 @@
 package nemo.networking;
 
-import java.io.IOException;
-import java.net.InetAddress;
 
 public class Server {
     private static boolean running = false;
-    private static final int TIMEOUT_MS = 4000;
 
     public static void run() {
         running = true;
@@ -65,4 +62,11 @@ public class Server {
         }
     }
 
+    public static boolean isRunning() {
+        return running;
+    }
+
+    public static void setRunning(boolean running) {
+        Server.running = running;
+    }
 }

@@ -105,20 +105,18 @@ public class Inofs_devices_hbox {
     }
 
 
-    public Inofs_devices_hbox setNd(NetworkDevice nd) {
+    public void setNd(NetworkDevice nd) {
         this.nd = nd;
         this.ns = null;
         this.pc = null;
         this.vm = null;
-        return this;
     }
 
-    public Inofs_devices_hbox setNs(NetworkService ns) {
+    public void setNs(NetworkService ns) {
         this.ns = ns;
         this.nd = null;
         this.pc = null;
         this.vm = null;
-        return this;
     }
 
     public Inofs_devices_hbox setPc(PC pc) {
@@ -158,11 +156,6 @@ public class Inofs_devices_hbox {
         }
     }
 
-    /** Ustawia tylko stan wewnętrzny bez bezpośredniej aktualizacji UI. */
-    public void setRunningState(boolean running) {
-        this.running = running;
-        this.runningStateKnown.set(true);
-    }
 
     public void cancelStatusCheck() {
         checkCancelled.set(true);
@@ -480,7 +473,7 @@ public class Inofs_devices_hbox {
         edit.initStyle(StageStyle.UTILITY);
         edit.initModality(Modality.APPLICATION_MODAL);
         if (main.getScene() != null && main.getScene().getWindow() instanceof Stage) {
-            edit.initOwner((Stage) main.getScene().getWindow());
+            edit.initOwner(main.getScene().getWindow());
         }
         edit.setTitle("Edytuj IP — " + entry.index);
         edit.setWidth(300);
