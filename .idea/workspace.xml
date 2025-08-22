@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="90c57be0-a485-4af8-9375-64f5647ccc72" name="Changes" comment="Proste poprawki i usunięcie zbędnych lub nie urzywanych elemntów">
+    <list default="true" id="90c57be0-a485-4af8-9375-64f5647ccc72" name="Changes" comment="dorbne poprawki">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/NemoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/NemoController.java" afterDir="false" />
     </list>
@@ -282,7 +282,15 @@
       <option name="project" value="LOCAL" />
       <updated>1755803672791</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="dorbne poprawki">
+      <option name="closed" value="true" />
+      <created>1755805122122</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1755805122122</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -318,6 +326,7 @@
     <MESSAGE value="fix delete in tp" />
     <MESSAGE value="łączenie &quot;działa&quot;. Do poprawy by Maszyny nie latały po całej planszy przy przesuwaniu" />
     <MESSAGE value="Proste poprawki i usunięcie zbędnych lub nie urzywanych elemntów" />
-    <option name="LAST_COMMIT_MESSAGE" value="Proste poprawki i usunięcie zbędnych lub nie urzywanych elemntów" />
+    <MESSAGE value="dorbne poprawki" />
+    <option name="LAST_COMMIT_MESSAGE" value="dorbne poprawki" />
   </component>
 </project>
