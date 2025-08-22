@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.Pane?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="nemo.networking.NemoController"
+            fx:id="menu" styleClass="main-panel">
+        <top>
+            <HBox fx:id="top_menu">
+                <Button fx:id="top_help" text="help" styleClass="btn"/>
+                <Button fx:id="top_files" text="files" styleClass="btn"/>
+                <Button fx:id="top_new" text="new" styleClass="btn" onAction="#top_new_action"/>
+                <Button fx:id="top_computers" text="computers" styleClass="btn" onAction="#top_computer_action"/>
+                <Button fx:id="top_network_device" text="network device" styleClass="btn" onAction="#top_network_device_action" />
+                <Button fx:id="top_network_service" text="network service" onAction="#top_network_service_action" styleClass="btn" />
+                <Button fx:id="top_vms" text="virtual machines" onAction="#top_vm_action" styleClass="btn"/>
+                <Button fx:id="top_server" text="server" styleClass="btn" />
+            </HBox>
+
+        </top>
+        <center>
+            <Pane fx:id="center_menu"/>
+        </center>
+
+</BorderPane>

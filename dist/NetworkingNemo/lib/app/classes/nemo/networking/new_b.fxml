@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="nemo.networking.New_b_Conntroller"
+            prefHeight="700.0" prefWidth="900.0" minHeight="700" minWidth="900"
+            >
+    <left>
+        <VBox styleClass="bar_menu">
+            <Button text="virtual machines" fx:id="vm" styleClass="btn"/>
+            <Button text="computer or server" fx:id="pc" styleClass="btn"/>
+            <Button text="network service" fx:id="ns" styleClass="btn"/>
+            <Button text="network device" fx:id="nd" styleClass="btn"/>
+        </VBox>
+    </left>
+    <bottom>
+        <HBox styleClass="bar_menu" alignment="BOTTOM_RIGHT">
+            <Button text="Submit" styleClass="btn" fx:id="submit" onAction="#submit"/>
+        </HBox>
+    </bottom>
+    <center>
+        <VBox fx:id="center" alignment="TOP_CENTER"/>
+    </center>
+</BorderPane>

@@ -4,9 +4,186 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="90c57be0-a485-4af8-9375-64f5647ccc72" name="Changes" comment="dorbne poprawki">
+    <list default="true" id="90c57be0-a485-4af8-9375-64f5647ccc72" name="Changes" comment="&quot;fix drag&quot; powiedzmy że przesuwanie działa">
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/bin/NetworkingNemo" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/NetworkingNemo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/.jpackage.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/Networking-Nemo-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/NetworkingNemo.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/module-info.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/Devices/Connection.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/Devices/Dev.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/Devices/NetworkDevice.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/Devices/NetworkService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/Devices/PC.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/Devices/VM.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/Devices/maper/Mapper_t$Point.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/Devices/maper/Mapper_t.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/Devices/root_dev.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/Images_st.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/Inofs_devices_hbox$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/Inofs_devices_hbox$IPEntry.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/Inofs_devices_hbox.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/Launcher.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/Nemo.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/NemoController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/New_b_Conntroller.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/Server.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/ServerController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/Topologia.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/images/api.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/images/db.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/images/firewall.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/images/linux_server.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/images/linux_work_stecion.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/images/ruter_ap.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/images/ruter_ap_wi_fi_on.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/images/switch_l2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/images/switch_l3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/images/wan_cloud.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/images/windows_server.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/images/windows_work_stecion.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/machine.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/nemo-view.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/new_b.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/new_machineController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/server.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/classes/nemo/networking/styles/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/maven-archiver/pom.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/app/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/libapplauncher.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/bin/java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/bin/jrunscript" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/bin/keytool" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/conf/jaxp.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/conf/logging.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/conf/net.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/conf/sdp/sdp.conf.template" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/conf/security/java.policy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/conf/security/java.security" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/conf/security/nss.fips.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/conf/security/policy/README.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/conf/security/policy/limited/default_US_export.policy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/conf/security/policy/limited/default_local.policy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/conf/security/policy/limited/exempt_local.policy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/conf/security/policy/unlimited/default_US_export.policy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/conf/security/policy/unlimited/default_local.policy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/conf/sound.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.base/ADDITIONAL_LICENSE_INFO" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.base/ASSEMBLY_EXCEPTION" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.base/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.base/aes.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.base/asm.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.base/c-libutl.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.base/cldr.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.base/icu.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.base/public_suffix.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.base/siphash.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.base/unicode.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.base/zlib.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.datatransfer/ADDITIONAL_LICENSE_INFO" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.datatransfer/ASSEMBLY_EXCEPTION" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.datatransfer/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.desktop/ADDITIONAL_LICENSE_INFO" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.desktop/ASSEMBLY_EXCEPTION" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.desktop/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.desktop/colorimaging.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.desktop/freetype.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.desktop/giflib.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.desktop/harfbuzz.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.desktop/jpeg.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.desktop/lcms.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.desktop/libpng.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.desktop/mesa3d.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.desktop/pipewire.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.desktop/xwd.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.logging/ADDITIONAL_LICENSE_INFO" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.logging/ASSEMBLY_EXCEPTION" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.logging/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.prefs/ADDITIONAL_LICENSE_INFO" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.prefs/ASSEMBLY_EXCEPTION" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.prefs/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.scripting/ADDITIONAL_LICENSE_INFO" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.scripting/ASSEMBLY_EXCEPTION" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.scripting/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.xml/ADDITIONAL_LICENSE_INFO" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.xml/ASSEMBLY_EXCEPTION" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.xml/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.xml/bcel.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.xml/dom.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.xml/jcup.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.xml/xalan.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/java.xml/xerces.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/javafx.base/ADDITIONAL_LICENSE_INFO" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/javafx.base/ASSEMBLY_EXCEPTION" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/javafx.base/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/javafx.controls/ADDITIONAL_LICENSE_INFO" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/javafx.controls/ASSEMBLY_EXCEPTION" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/javafx.controls/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/javafx.fxml/ADDITIONAL_LICENSE_INFO" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/javafx.fxml/ASSEMBLY_EXCEPTION" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/javafx.fxml/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/javafx.graphics/ADDITIONAL_LICENSE_INFO" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/javafx.graphics/ASSEMBLY_EXCEPTION" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/javafx.graphics/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/javafx.graphics/jpeg_fx.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/javafx.graphics/mesa3d.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/jdk.unsupported/ADDITIONAL_LICENSE_INFO" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/jdk.unsupported/ASSEMBLY_EXCEPTION" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/legal/jdk.unsupported/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/classlist" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/javafx-swt.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/javafx.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/jexec" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/jrt-fs.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/jspawnhelper" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/jvm.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/libawt.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/libawt_headless.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/libawt_xawt.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/libdecora_sse.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/libfontmanager.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/libfreetype.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/libglass.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/libglassgtk3.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/libjava.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/libjavafx_font.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/libjavafx_font_freetype.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/libjavafx_font_pango.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/libjavafx_iio.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/libjavajpeg.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/libjawt.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/libjimage.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/libjli.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/libjsig.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/libjsound.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/liblcms.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/libmlib_image.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/libnet.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/libnio.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/libprefs.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/libprism_common.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/libprism_es2.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/libprism_sw.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/libsplashscreen.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/libsyslookup.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/libsystemconf.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/libverify.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/libzip.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/modules" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/psfont.properties.ja" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/psfontj2d.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/security/blocked.certs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/security/cacerts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/security/default.policy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/security/public_suffix_list.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/server/libjsig.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/server/libjvm.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/lib/tzdb.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/NetworkingNemo/lib/runtime/release" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/scripts-notes/build.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/NemoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/NemoController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -290,7 +467,15 @@
       <option name="project" value="LOCAL" />
       <updated>1755805122122</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="&quot;fix drag&quot; powiedzmy że przesuwanie działa">
+      <option name="closed" value="true" />
+      <created>1755876976515</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1755876976515</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -327,6 +512,7 @@
     <MESSAGE value="łączenie &quot;działa&quot;. Do poprawy by Maszyny nie latały po całej planszy przy przesuwaniu" />
     <MESSAGE value="Proste poprawki i usunięcie zbędnych lub nie urzywanych elemntów" />
     <MESSAGE value="dorbne poprawki" />
-    <option name="LAST_COMMIT_MESSAGE" value="dorbne poprawki" />
+    <MESSAGE value="&quot;fix drag&quot; powiedzmy że przesuwanie działa" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;fix drag&quot; powiedzmy że przesuwanie działa" />
   </component>
 </project>
