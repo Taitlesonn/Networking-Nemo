@@ -2,6 +2,9 @@ package nemo.networking;
 
 import nemo.networking.Devices.*;
 import nemo.networking.Devices.maper.Mapper_t;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.UnmodifiableView;
 
 import java.util.*;
 
@@ -30,19 +33,19 @@ public class Topologia {
         };
     }
 
-    private static Optional<NetworkDevice> findNetworkDevice(String name) {
+    private static @NotNull Optional<NetworkDevice> findNetworkDevice(String name) {
         return networkDevices.stream().filter(nd -> name.equals(nd.getName())).findFirst();
     }
 
-    private static Optional<NetworkService> findNetworkService(String name) {
+    private static @NotNull Optional<NetworkService> findNetworkService(String name) {
         return networkServices.stream().filter(ns -> name.equals(ns.getName())).findFirst();
     }
 
-    private static Optional<PC> findPC(String name) {
+    private static @NotNull Optional<PC> findPC(String name) {
         return pcs.stream().filter(p -> name.equals(p.getName())).findFirst();
     }
 
-    private static Optional<VM> findVM(String name) {
+    private static @NotNull Optional<VM> findVM(String name) {
         return vms.stream().filter(v -> name.equals(v.getName())).findFirst();
     }
 
@@ -351,19 +354,23 @@ public class Topologia {
         return center_m.getPoint(deviceObject).map(p -> new double[]{(double) p.x(), (double) p.y()});
     }
 
-    public static List<NetworkDevice> getNetworkDevices() {
+    @Contract(pure = true)
+    public static @NotNull @UnmodifiableView List<NetworkDevice> getNetworkDevices() {
         return Collections.unmodifiableList(networkDevices);
     }
 
-    public static List<NetworkService> getNetworkServices() {
+    @Contract(pure = true)
+    public static @NotNull @UnmodifiableView List<NetworkService> getNetworkServices() {
         return Collections.unmodifiableList(networkServices);
     }
 
-    public static List<PC> getPcs() {
+    @Contract(pure = true)
+    public static @NotNull @UnmodifiableView List<PC> getPcs() {
         return Collections.unmodifiableList(pcs);
     }
 
-    public static List<VM> getVms() {
+    @Contract(pure = true)
+    public static @NotNull @UnmodifiableView List<VM> getVms() {
         return Collections.unmodifiableList(vms);
     }
 

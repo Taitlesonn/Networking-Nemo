@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import nemo.networking.Devices.*;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -441,7 +442,7 @@ public class Inofs_devices_hbox {
         return arr.length;
     }
 
-    private ListView<IPEntry> getIpEntryListView(ObservableList<IPEntry> items, root_dev base) {
+    private @NotNull ListView<IPEntry> getIpEntryListView(ObservableList<IPEntry> items, root_dev base) {
         ListView<IPEntry> lv = new ListView<>(items);
         lv.setPrefHeight(Math.min(240, items.size() * 30 + 10));
         lv.setStyle("-fx-control-inner-background: #072033; -fx-background-insets: 0; -fx-border-color: #153e62;");
