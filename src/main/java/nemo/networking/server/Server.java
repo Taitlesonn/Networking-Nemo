@@ -1,4 +1,4 @@
-package nemo.networking;
+package nemo.networking.server;
 
 
 public class Server {

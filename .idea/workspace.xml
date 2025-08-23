@@ -4,17 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="90c57be0-a485-4af8-9375-64f5647ccc72" name="Changes" comment="Build for linux jlink + jpackage">
+    <list default="true" id="90c57be0-a485-4af8-9375-64f5647ccc72" name="Changes" comment="ui/ux fix">
+      <change afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/server/bild/JsonUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/server/bild/Node_s.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/server/bild/WinRc.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/server/bild/ftp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/server/bild/ftps.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/server/bild/sftp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/server/bild/snmp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/server/bild/ssh.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/Images_st.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/Images_st.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/Inofs_devices_hbox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/Inofs_devices_hbox.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/NemoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/NemoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/server/Server.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/nemo/networking/Topologia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nemo/networking/Topologia.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/nemo/networking/machine.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/nemo/networking/machine.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/nemo/networking/nemo-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/nemo/networking/nemo-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/nemo/networking/new_b.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/nemo/networking/new_b.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/nemo/networking/server.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/nemo/networking/server.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/nemo/networking/styles/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/nemo/networking/styles/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -314,7 +317,15 @@
       <option name="project" value="LOCAL" />
       <updated>1755878363765</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="ui/ux fix">
+      <option name="closed" value="true" />
+      <created>1755947016697</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1755947016697</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -353,6 +364,7 @@
     <MESSAGE value="dorbne poprawki" />
     <MESSAGE value="&quot;fix drag&quot; powiedzmy że przesuwanie działa" />
     <MESSAGE value="Build for linux jlink + jpackage" />
-    <option name="LAST_COMMIT_MESSAGE" value="Build for linux jlink + jpackage" />
+    <MESSAGE value="ui/ux fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="ui/ux fix" />
   </component>
 </project>
